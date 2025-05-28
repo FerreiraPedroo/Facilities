@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
@@ -22,7 +23,7 @@ import { Padding } from "@mui/icons-material";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 
 const data = [
-	{ icon: <People />, label: "Funcionarios" },
+	{ icon: <People />, label: "Funcionarios", url: "/funcionarios" },
 	{ icon: <ApartmentIcon />, label: "Unidades" },
 	{ icon: <PermMedia />, label: "Projetos" },
 	{ icon: <Public />, label: "Hosting" }
@@ -44,11 +45,12 @@ const FireNav = styled(List)({
 
 export function SideBar() {
 	// const [open, setOpen] = React.useState(true);
+        const navigator = new useNavigate();
 
-
-	function mudarPagina(e){
-		console.log(e)
+	function mudarPagina(url){
+		navigator(url);
 	}
+
 	return (
 		<Box sx={{ display: "flex" }}>
 			<Paper elevation={4} sx={{ maxWidth: 224 }}>
@@ -144,7 +146,7 @@ export function SideBar() {
 
 						{open &&
 							data.map((item) => (
-								<ListItemButton key={item.label} onClick={(e)=>mudarPagina(e)} sx={{ py: 1, px: 0, minHeight: 32 }}>
+								<ListItemButton key={item.label} onClick={(e)=>mudarPagina(item.url)} sx={{ py: 1, px: 0, minHeight: 32 }}>
 									<ListItemIcon sx={{ color: "inherit" }}>{item.icon}</ListItemIcon>
 									<ListItemText primary={item.label} />
 								</ListItemButton>

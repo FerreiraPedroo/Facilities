@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.div`
 	display: flex;
-	height: 100vh;
-	overflow: hidden;
+	height: 100%;
+	//overflow: hidden;
 	flex-direction: row;
 	gap: 8px;
 `;
@@ -16,10 +16,10 @@ export const HrLine = styled.hr`
 
 export const CenterContainer = styled.div`
 	width: 100vw;
-	height: 100vh;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
-	overflow: hidden;
+	//overflow: hidden;
 	gap: 16px;
 `;
 
