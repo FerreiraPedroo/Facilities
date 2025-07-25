@@ -3,7 +3,7 @@ import { createBrowserRouter, createRoutesFromElements, Route } from "react-rout
 
 import { Root } from "pages/Root";
 import { Home } from "pages/Home";
-import { Funcionarios } from "pages/Funcionario";
+import { Requisicoes } from "pages/Requisicoes";
 
 
 
@@ -13,7 +13,7 @@ export const router = createBrowserRouter(
 			{/* <Route path="/" element={<Login />} /> */}
 			<Route element={<Root />}>
 				<Route path="/" element={<Home />} />
-				<Route path="/funcionarios" element={<Funcionarios />} />
+				<Route path="/requisicoes" element={<Requisicoes />} />
 			</Route>
 		</Route>
 	)

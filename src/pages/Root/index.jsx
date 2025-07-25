@@ -11,7 +11,7 @@ export function Root() {
 
 	return (
 		<S.Container>
-				<SideBar />
+				{/*  <SideBar />  */}
 			<S.CenterContainer>
 				<NavBar />
 				<Outlet />
