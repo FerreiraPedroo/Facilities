@@ -1,21 +1,13 @@
-import React from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-
-import { SideBar } from "components/SideBar";
-import { NavBar } from "components/NavBar/index.jsx";
-
-import * as S from "./styles.jsx";
+import { useState } from 'react';
+import { Outlet } from "react-router-dom";
+import { Menu } from "@components/Menu";
 
 export function Root() {
-	const navigate = useNavigate();
-
-	return (
-		<S.Container>
-				{/*  <SideBar />  */}
-			<S.CenterContainer>
-				<NavBar />
-				<Outlet />
-			</S.CenterContainer>
-		</S.Container>
-	);
+  return (
+	<div className="w-full h-screen">
+		<Menu/>
+		<Outlet/>
+	</div>
+  )
 }
+
