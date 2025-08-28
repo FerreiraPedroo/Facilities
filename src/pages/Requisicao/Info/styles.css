@@ -1,0 +1,19 @@
+/* TABLES */
+.p-tabview-panels {
+ padding: 24px 0;
+
+}
+
+/* PAINEL */
+.p-panel{
+ border-radius: 7px 7px 0 0;
+ border: 1px solid var(--gray-400);
+}
+.p-panel-header{
+ background-color: var(--gray-200);
+}
+
+.p-panel-title{
+ font-size: 1.5rem;
+ color:var(--gray-900);
+}
