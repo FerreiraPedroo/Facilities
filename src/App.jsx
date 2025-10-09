@@ -12,7 +12,7 @@ function App() {
       <Route path="/" element={<Root/>}>
         <Route index element={<Home/>}/>
         <Route path="/requisicoes" element={ <RequisicaoList/> }/>
-        <Route path="/requisicoes/:id" element={ <RequisicaoInfo/> }/>
+        <Route path="/requisicoes/:requisicaoID" element={ <RequisicaoInfo/> }/>
       </Route>
     </Routes>
   )

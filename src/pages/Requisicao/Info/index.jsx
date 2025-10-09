@@ -1,26 +1,26 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
 
-import { Panel } from 'primereact/panel';
-import { TabView, TabPanel } from 'primereact/tabview';
-import { Calendar } from 'primereact/calendar';
-import { Column } from 'primereact/column';
-import { Button } from 'primereact/button';
-import { DataTable } from 'primereact/datatable';
-import { Divider } from 'primereact/divider';
-import { Card } from 'primereact/card';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+import Box from '@mui/material/Box';
 import "./styles.css";
 
 
 export function RequisicaoInfo() {
  const { id } = useParams();
 
- const [requisicaoAlterado, setRequisicaoAlterado] = useState({});
-
  const [requisicao, setRequisicao] = useState(
   { 
-   req: "061004",
+   requisicao: "061004",
    resumo: "Piso e rodapé de granito - Clin vet - BGS",
    data_abertura: "20/05/2025",
    data_retorno_cotacao: "25/05/2025",
@@ -28,13 +28,31 @@ export function RequisicaoInfo() {
    data_entrega: "10/06/2025",
    justificativa: "Materiais para Manunt. corretivas Câmeras e Alarmes - Compras diretas - BS",
    observacao: "Esta requisição está em atrazo.",
-   notas_fiscais: [],
    projetos: [{id: 12345, codigo:"PRO0341", titulo: "[BS] Clínica Veterinária", unidade: "Sede", periodo: "2025-2"}],
+   notas_fiscais: [
+    {
+     id: 1,
+     numero_nf: 123,
+     fornecedor: "CHATUBA DE NILOPOLIS",
+     pedido_compras: 45004,
+     requisicao: "061004",
+     data_recebimento: "09/09/2025"
+    },
+    {
+     id: 2,
+     numero_nf: 456,
+     fornecedor: "FRIGELAR COMERCIO",
+     pedido_compras: 45005,
+     requisicao: "061004",
+     data_recebimento: "12/09/2025"
+    }
+   ],
    itens: [
     {
      cod: "50.55.00047",
      descricao: "JOELHO 40 (ESGOTO) - JOELHO DE 90° COLA",
-     quantidade: 4
+     quantidade: 4,
+     nota_fiscal: [{id: 1, quantidade: 2}, {id: 2, quantidade: 2} ]
     },
     {
      cod: "50.55.00002",
@@ -60,80 +78,98 @@ export function RequisicaoInfo() {
   })
 
 
- function handleRequisicao(value, name){
-
-  setRequisicaoAlterado((prev) => {
-   return { ...prev, [name]: value};
-  })
- }
 
 
 return (
-<div className="w-full p-2">
+<div className="flex flex-col m-4">
+ <Paper elevation={1} className="flex flex-col gap-4 p-4">
 
-<Panel header={`REQ ${requisicao.req} - ${requisicao.resumo}`}>
- <div className="flex items-end gap-6 mb-8 text-xl border-1 rounded-lg  border-stone-300">
-    <p className="p-4">Justificativa: {requisicao.justificativa}</p>
- </div>
+  <Typography variant="h4">REQ {requisicao.requisicao}</Typography>
 
- <Divider />
+    <Stack 
+      direction="row"
+      spacing={2}
+      sx={{
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+	maxWidth: '1024px'
+        }}
+    >
+        <TextField
+          label="REQUISIÇÃO"
+          id="outlined-size-small"
+          defaultValue="Small"
+          size="small"
+	  sx={{ width: '20%' }}
+        />
+        <TextField
+          label="RESUMO"
+          id="outlined-size-small"
+          defaultValue="Small"
+          size="small"
+	  sx={{ width: '80%' }}
+        />
+    </Stack>
 
- <div className="flex items-end gap-10 mb-6">
-  <div className="">
-   <label htmlFor="buttondisplay" className="font-bold block mb-2">
-    Data de abertura
-   </label>
-   <Calendar id="data_abertura" name="data_abertura" value={requisicaoAlterado.data_abertura || requisicao.data_abertura} onChange={(e) => handleRequisicao(e.value, e.target.name)} showIcon />
-  </div>
+    <Stack 
+      direction="row"
+      spacing={2}
+      sx={{
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+	maxWidth: '1024px'
+        }}
+    >
+        <TextField
+          label="JUSTIFICATIVA"
+          id="outlined-size-small"
+          defaultValue="Small"
+          size="small"
+	  sx={{ width: '60%' }}
+        />
+        <TextField
+          label="PROJETO"
+          id="outlined-size-small"
+          defaultValue="Small"
+          size="small"
+	  sx={{ width: '40%' }}
+        />
+   </Stack>
 
-  <div className="">
-   <label htmlFor="buttondisplay" className="font-bold block mb-2">
-    Data de abertura
-   </label>
-   <Calendar id="data_retorno_cotacao" name="data_retorno_cotacao" value={requisicaoAlterado.data_retorno_cotacao || requisicao.data_retorno_cotacao} onChange={(e) => handleRequisicao(e.value, e.target.name)} showIcon />
-  </div>
 
-  <div className="">
-   <label htmlFor="buttondisplay" className="font-bold block mb-2">
-    Data aprovação da gerência
-   </label>
-   <Calendar id="data_aprovacao_gerencia" name="data_aprovacao_gerencia" value={requisicaoAlterado.data_aprovacao_gerencia || requisicao.data_aprovacao_gerencia} onChange={(e) => handleRequisicao(e.value, e.target.name)} showIcon />
-  </div>
-  
-  <div className="">
-   <label htmlFor="buttondisplay" className="font-bold block mb-2">
-    Data de entrega
-   </label>
-   <Calendar id="data_entrega" name="data_entrega" value={requisicaoAlterado.data_entrega || requisicao.data_entrega} onChange={(e) => handleRequisicao(e.value, e.target.name)} showIcon />
-  </div>
+      <Accordion sx={{maxWidth: '1024px'}}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel-detalhes-req"
+          id="panel-detalhes-req"
+        >
+          <Typography component="span">DETALHES DA REQUISIÇÃO</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+          malesuada lacus ex, sit amet blandit leo lobortis eget.
+        </AccordionDetails>
+      </Accordion>
+      <Accordion sx={{maxWidth: '1024px'}}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel-projeto"
+          id="panel-projeto"
+        >
+          <Typography component="span">PROJETO</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+          malesuada lacus ex, sit amet blandit leo lobortis eget.
+        </AccordionDetails>
+      </Accordion>
 
- </div>
 
- <Divider />
 
- <TabView>
-  <TabPanel header="Projeto">
-   <Card title={`${requisicao.projetos[0].codigo} - ${requisicao.projetos[0].titulo}`}>
-    <p className="m-0">Unidade: {requisicao.projetos[0].unidade}</p>
-    <p className="m-0">Periodo: {requisicao.projetos[0].periodo}</p>
-   </Card>
-  </TabPanel>
-
-  <TabPanel header="Itens">
-   <DataTable value={requisicao.itens} size="small" tableStyle={{ minWidth: '100%' }}>
-    <Column field="cod" header="Código" style={{ width: '256px' }}></Column>
-    <Column field="descricao" header="Descrição" style={{ width: '80%' }}></Column>
-    <Column field="quantidade" header="Quantidade" style={{ width: '256px' }}></Column>
-   </DataTable>
-  </TabPanel>
-
-  <TabPanel header="Requisições">
-   <p className="m-0"></p>
-  </TabPanel>
-  
- </TabView>
- </Panel>
+ </Paper>
 </div>
- )
+
+)
+
 }
 

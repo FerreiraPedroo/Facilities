@@ -1,0 +1,9 @@
+const STATUS_COLOR = {
+  "PEND ENTREGA": "#000080",
+  "FINALIZADO": "#006400",
+  "PEND AP GERENCIA": "#2F4F4F",
+  "PEND COTAÇÃO": "#FFD700",
+};
+
+
+export { STATUS_COLOR };

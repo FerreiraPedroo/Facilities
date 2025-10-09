@@ -1,0 +1,162 @@
+export const REQUISICOES = [
+    {
+      "REQ": 20240001,
+      "UNIDADE_SIGLA": "SP",
+      "CLASSIFICACAO": "Investimento",
+      "PROJETO_CODIGO": "101",
+      "RESUMO": "Compra de 10 notebooks",
+      "DT_ENVIO": 1704153600,
+      "DT_APROVACAO": 1704240000,
+      "ORCAMENTO": "1"
+    },
+    {
+      "REQ": 20240002,
+      "UNIDADE_SIGLA": "RJ",
+      "CLASSIFICACAO": "Despesa",
+      "PROJETO_CODIGO": "105",
+      "RESUMO": "Contratação de agência de marketing",
+      "DT_ENVIO": 1706832000,
+      "DT_APROVACAO": 1706918400,
+      "ORCAMENTO": "2"
+    },
+    {
+      "REQ": 20240003,
+      "UNIDADE_SIGLA": "MG",
+      "CLASSIFICACAO": "Despesa",
+      "PROJETO_CODIGO": "107",
+      "RESUMO": "Inscrição em curso de liderança",
+      "DT_ENVIO": 1709337600,
+      "DT_APROVACAO": 1709424000,
+      "ORCAMENTO": "3"
+    },
+    {
+      "REQ": 20240004,
+      "UNIDADE_SIGLA": "BA",
+      "CLASSIFICACAO": "Investimento",
+      "PROJETO_CODIGO": "104",
+      "RESUMO": "Compra de cimento para a obra",
+      "DT_ENVIO": 1711929600,
+      "DT_APROVACAO": 1712016000,
+      "ORCAMENTO": "4"
+    },
+    {
+      "REQ": 20240005,
+      "UNIDADE_SIGLA": "RS",
+      "CLASSIFICACAO": "Investimento",
+      "PROJETO_CODIGO": "111",
+      "RESUMO": "Aquisição de torno CNC",
+      "DT_ENVIO": 1714521600,
+      "DT_APROVACAO": 1714608000,
+      "ORCAMENTO": "5"
+    },
+    {
+      "REQ": 20240006,
+      "UNIDADE_SIGLA": "PR",
+      "CLASSIFICACAO": "Investimento",
+      "PROJETO_CODIGO": "110",
+      "RESUMO": "Compra de 2 caminhões",
+      "DT_ENVIO": 1717200000,
+      "DT_APROVACAO": 1717286400,
+      "ORCAMENTO": "6"
+    },
+    {
+      "REQ": 20240007,
+      "UNIDADE_SIGLA": "SC",
+      "CLASSIFICACAO": "Despesa",
+      "PROJETO_CODIGO": "108",
+      "RESUMO": "Pagamento de consultoria",
+      "DT_ENVIO": 1719792000,
+      "DT_APROVACAO": 1719878400,
+      "ORCAMENTO": "7"
+    },
+    {
+      "REQ": 20240008,
+      "UNIDADE_SIGLA": "PE",
+      "CLASSIFICACAO": "Despesa",
+      "PROJETO_CODIGO": "109",
+      "RESUMO": "Reembolso de despesas de viagem",
+      "DT_ENVIO": 1722470400,
+      "DT_APROVACAO": 1722556800,
+      "ORCAMENTO": "8"
+    },
+    {
+      "REQ": 20240009,
+      "UNIDADE_SIGLA": "CE",
+      "CLASSIFICACAO": "Investimento",
+      "PROJETO_CODIGO": "103",
+      "RESUMO": "Pagamento de mensalidade AWS",
+      "DT_ENVIO": 1725148800,
+      "DT_APROVACAO": 1725235200,
+      "ORCAMENTO": "9"
+    },
+    {
+      "REQ": 20240010,
+      "UNIDADE_SIGLA": "AM",
+      "CLASSIFICACAO": "Investimento",
+      "PROJETO_CODIGO": "106",
+      "RESUMO": "Compra de microscópio eletrônico",
+      "DT_ENVIO": 1727740800,
+      "DT_APROVACAO": 1727827200,
+      "ORCAMENTO": "10"
+    },
+    {
+      "REQ": 20240011,
+      "UNIDADE_SIGLA": "GO",
+      "CLASSIFICACAO": "Despesa",
+      "PROJETO_CODIGO": "112",
+      "RESUMO": "Pagamento de consultoria ambiental",
+      "DT_ENVIO": 1730419200,
+      "DT_APROVACAO": 1730505600,
+      "ORCAMENTO": "11"
+    },
+    {
+      "REQ": 20240012,
+      "UNIDADE_SIGLA": "DF",
+      "CLASSIFICACAO": "Investimento",
+      "PROJETO_CODIGO": "113",
+      "RESUMO": "Contratação de desenvolvedor freelancer",
+      "DT_ENVIO": 1733011200,
+      "DT_APROVACAO": 1733097600,
+      "ORCAMENTO": "12"
+    },
+    {
+      "REQ": 20240013,
+      "UNIDADE_SIGLA": "ES",
+      "CLASSIFICACAO": "Despesa",
+      "PROJETO_CODIGO": "114",
+      "RESUMO": "Pagamento de auditoria de segurança",
+      "DT_ENVIO": 1735689600,
+      "DT_APROVACAO": 1735776000,
+      "ORCAMENTO": "13"
+    },
+    {
+      "REQ": 20240014,
+      "UNIDADE_SIGLA": "MT",
+      "CLASSIFICACAO": "Despesa",
+      "PROJETO_CODIGO": "115",
+      "RESUMO": "Pagamento de consultoria financeira",
+      "DT_ENVIO": 1704153600,
+      "DT_APROVACAO": 1704240000,
+      "ORCAMENTO": "14"
+    },
+    {
+      "REQ": 20240015,
+      "UNIDADE_SIGLA": "MS",
+      "CLASSIFICACAO": "Despesa",
+      "PROJETO_CODIGO": "116",
+      "RESUMO": "Aluguel de espaço para evento",
+      "DT_ENVIO": 1706832000,
+      "DT_APROVACAO": 1706918400,
+      "ORCAMENTO": "15"
+    },
+    {
+      "REQ": 20240016,
+      "UNIDADE_SIGLA": "PA",
+      "CLASSIFICACAO": "Investimento",
+      "PROJETO_CODIGO": "102",
+      "RESUMO": "Pagamento de licença SAP",
+      "DT_ENVIO": 1709337600,
+      "DT_APROVACAO": 1709424000,
+      "ORCAMENTO": "16"
+    }
+  ]

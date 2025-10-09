@@ -1,0 +1,98 @@
+export const UNIDADES = [
+    {
+      "ID": 1,
+      "SIGLA": "SP",
+      "NOME": "São Paulo",
+      "ENDERECO": "Avenida Paulista, 1000"
+    },
+    {
+      "ID": 2,
+      "SIGLA": "RJ",
+      "NOME": "Rio de Janeiro",
+      "ENDERECO": "Avenida Rio Branco, 1"
+    },
+    {
+      "ID": 3,
+      "SIGLA": "MG",
+      "NOME": "Minas Gerais",
+      "ENDERECO": "Avenida Afonso Pena, 500"
+    },
+    {
+      "ID": 4,
+      "SIGLA": "BA",
+      "NOME": "Bahia",
+      "ENDERECO": "Avenida Sete de Setembro, 200"
+    },
+    {
+      "ID": 5,
+      "SIGLA": "RS",
+      "NOME": "Rio Grande do Sul",
+      "ENDERECO": "Avenida Borges de Medeiros, 300"
+    },
+    {
+      "ID": 6,
+      "SIGLA": "PR",
+      "NOME": "Paraná",
+      "ENDERECO": "Rua XV de Novembro, 400"
+    },
+    {
+      "ID": 7,
+      "SIGLA": "SC",
+      "NOME": "Santa Catarina",
+      "ENDERECO": "Avenida Beira Mar Norte, 600"
+    },
+    {
+      "ID": 8,
+      "SIGLA": "PE",
+      "NOME": "Pernambuco",
+      "ENDERECO": "Avenida Boa Viagem, 700"
+    },
+    {
+      "ID": 9,
+      "SIGLA": "CE",
+      "NOME": "Ceará",
+      "ENDERECO": "Avenida Beira Mar, 800"
+    },
+    {
+      "ID": 10,
+      "SIGLA": "AM",
+      "NOME": "Amazonas",
+      "ENDERECO": "Avenida Djalma Batista, 900"
+    },
+    {
+      "ID": 11,
+      "SIGLA": "GO",
+      "NOME": "Goiás",
+      "ENDERECO": "Avenida Anhanguera, 1100"
+    },
+    {
+      "ID": 12,
+      "SIGLA": "DF",
+      "NOME": "Distrito Federal",
+      "ENDERECO": "Eixo Monumental, 1200"
+    },
+    {
+      "ID": 13,
+      "SIGLA": "ES",
+      "NOME": "Espírito Santo",
+      "ENDERECO": "Avenida Dante Michelini, 1300"
+    },
+    {
+      "ID": 14,
+      "SIGLA": "MT",
+      "NOME": "Mato Grosso",
+      "ENDERECO": "Avenida CPA, 1400"
+    },
+    {
+      "ID": 15,
+      "SIGLA": "MS",
+      "NOME": "Mato Grosso do Sul",
+      "ENDERECO": "Avenida Afonso Pena, 1500"
+    },
+    {
+      "ID": 16,
+      "SIGLA": "PA",
+      "NOME": "Pará",
+      "ENDERECO": "Avenida Presidente Vargas, 1600"
+    }
+  ];

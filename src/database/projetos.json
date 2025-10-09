@@ -1,0 +1,66 @@
+export const PROJETOS = [
+    {
+      "CODIGO": 101,
+      "DESCRICAO": "Desenvolvimento de Software"
+    },
+    {
+      "CODIGO": 102,
+      "DESCRICAO": "Implantação de Sistema ERP"
+    },
+    {
+      "CODIGO": 103,
+      "DESCRICAO": "Migração de Servidores para Nuvem"
+    },
+    {
+      "CODIGO": 104,
+      "DESCRICAO": "Construção de Novo Edifício Administrativo"
+    },
+    {
+      "CODIGO": 105,
+      "DESCRICAO": "Lançamento de Campanha de Marketing Digital"
+    },
+    {
+      "CODIGO": 106,
+      "DESCRICAO": "Pesquisa e Desenvolvimento de Novo Produto"
+    },
+    {
+      "CODIGO": 107,
+      "DESCRICAO": "Treinamento e Capacitação de Funcionários"
+    },
+    {
+      "CODIGO": 108,
+      "DESCRICAO": "Otimização de Processos Internos"
+    },
+    {
+      "CODIGO": 109,
+      "DESCRICAO": "Expansão para o Mercado Internacional"
+    },
+    {
+      "CODIGO": 110,
+      "DESCRICAO": "Aquisição de Nova Frota de Veículos"
+    },
+    {
+      "CODIGO": 111,
+      "DESCRICAO": "Renovação do Parque de Máquinas"
+    },
+    {
+      "CODIGO": 112,
+      "DESCRICAO": "Implementação de Política de Sustentabilidade"
+    },
+    {
+      "CODIGO": 113,
+      "DESCRICAO": "Desenvolvimento de Aplicativo Mobile"
+    },
+    {
+      "CODIGO": 114,
+      "DESCRICAO": "Auditoria de Segurança da Informação"
+    },
+    {
+      "CODIGO": 115,
+      "DESCRICAO": "Reestruturação do Departamento Financeiro"
+    },
+    {
+      "CODIGO": 116,
+      "DESCRICAO": "Organização de Evento Corporativo"
+    }
+  ],

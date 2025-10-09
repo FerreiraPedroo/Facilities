@@ -1,0 +1,82 @@
+export const FORNECEDORES = [
+    {
+      "ID": 1,
+      "RAZAO_SOCIAL": "Dell Computadores do Brasil Ltda.",
+      "CNPJ": "72.381.189/0001-10"
+    },
+    {
+      "ID": 2,
+      "RAZAO_SOCIAL": "Agência de Publicidade XYZ S.A.",
+      "CNPJ": "01.234.567/0001-89"
+    },
+    {
+      "ID": 3,
+      "RAZAO_SOCIAL": "Escola de Negócios ABC Ltda.",
+      "CNPJ": "98.765.432/0001-10"
+    },
+    {
+      "ID": 4,
+      "RAZAO_SOCIAL": "Cimentos do Brasil S.A.",
+      "CNPJ": "12.345.678/0001-90"
+    },
+    {
+      "ID": 5,
+      "RAZAO_SOCIAL": "Máquinas Industriais e Equipamentos Ltda.",
+      "CNPJ": "87.654.321/0001-20"
+    },
+    {
+      "ID": 6,
+      "RAZAO_SOCIAL": "Scania Latin America Ltda.",
+      "CNPJ": "59.104.901/0001-73"
+    },
+    {
+      "ID": 7,
+      "RAZAO_SOCIAL": "Delta Consultoria Empresarial Ltda.",
+      "CNPJ": "23.456.789/0001-30"
+    },
+    {
+      "ID": 8,
+      "RAZAO_SOCIAL": "GOL Linhas Aéreas S.A.",
+      "CNPJ": "07.575.651/0001-59"
+    },
+    {
+      "ID": 9,
+      "RAZAO_SOCIAL": "Amazon Web Services Brasil S.A.",
+      "CNPJ": "23.412.247/0001-00"
+    },
+    {
+      "ID": 10,
+      "RAZAO_SOCIAL": "Equipamentos Científicos do Brasil S.A.",
+      "CNPJ": "34.567.890/0001-40"
+    },
+    {
+      "ID": 11,
+      "RAZAO_SOCIAL": "Eco Consultoria Ambiental Ltda.",
+      "CNPJ": "45.678.901/0001-50"
+    },
+    {
+      "ID": 12,
+      "RAZAO_SOCIAL": "João da Silva Desenvolvimento ME",
+      "CNPJ": "56.789.012/0001-60"
+    },
+    {
+      "ID": 13,
+      "RAZAO_SOCIAL": "Secure Auditores Independentes S.S.",
+      "CNPJ": "67.890.123/0001-70"
+    },
+    {
+      "ID": 14,
+      "RAZAO_SOCIAL": "Finance Consultoria e Assessoria Ltda.",
+      "CNPJ": "78.901.234/0001-80"
+    },
+    {
+      "ID": 15,
+      "RAZAO_SOCIAL": "Centro de Convenções Expo Center Ltda.",
+      "CNPJ": "89.012.345/0001-90"
+    },
+    {
+      "ID": 16,
+      "RAZAO_SOCIAL": "SAP Brasil Ltda.",
+      "CNPJ": "59.581.238/0001-69"
+    }
+  ]

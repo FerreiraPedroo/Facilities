@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Outlet } from "react-router-dom";
-import { Menu } from "@components/Menu";
+import { AppMenu } from "@components/Menu";
+import Container from '@mui/material/Container';
+
 
 export function Root() {
   return (
-	<div className="w-full h-screen">
-		<Menu/>
+	<div>
+		<AppMenu/>
 		<Outlet/>
 	</div>
   )
