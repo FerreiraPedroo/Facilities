@@ -1,92 +1,85 @@
-import * as React from 'react';
-import { useNavigate } from 'react-router';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import { useMemo } from "react";
+import { Box, Button, Flex, Link, Menu, Portal, Text } from "@chakra-ui/react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { FiMenu } from "react-icons/fi";
 
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+const items = [
+  {
+    id: 2,
+    label: "Projetos",
+    icon: "",
+    url: "/projetos",
+  },
+  {
+    id: 1,
+    label: "Requisicões",
+    icon: "",
+    url: "/requisicoes",
+  },
+];
 
-
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-
-const items=[
- {
-  id: 1,
-  label: "Requisicões",
-  icon: "",
-  url: "/requisicoes"
- },
- {
-  id: 2,
-  label: "Projetos",
-  icon: "",
-  url: "/projetos"
- }
-]
-
+const pathNav = {
+  projetos: {
+    label: "Projetos",
+    url: "/projetos",
+  },
+  requisicoes: {
+    label: "Requisicões",
+    url: "/requisicoes",
+  },
+};
 
 export function AppMenu() {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenu = (url) => {
-    setAnchorEl(null);
-    navigate(url);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
+  const botoes = useMemo(() => {
+    return items.map((botao) => {
+      return (
+        <Menu.Item
+          key={botao.id}
+          value={botao.label}
+          onClick={() => navigate(botao.url)}
+          width="160px"
+          p="2"
+        >
+          {botao.label}
+        </Menu.Item>
+      );
+    });
+  }, []);
 
   return (
-    <Box sx={{ flexGrow: 1, m:0, p:0 }}>
-      <AppBar position="static" sx={{ m:0, p:0 }}>
-        <Toolbar>
+    <Flex background="blue.950" width="100%" paddingX="6" paddingY="3" gap={8}>
+      <Menu.Root>
+        <Menu.Trigger asChild p="0" m="0" _hover={{ bg: "blue.muted" }}>
+          <Button variant="surface" size="sm" p="0" bg="blue.subtle">
+            <FiMenu />
+          </Button>
+        </Menu.Trigger>
+        <Portal>
+          <Menu.Positioner>
+            <Menu.Content padding={2}>{botoes}</Menu.Content>
+          </Menu.Positioner>
+        </Portal>
+      </Menu.Root>
 
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-	    onClick={handleClick}
-            sx={{ mr: 2 }}
+      <Box>
+        {pathNav[location.pathname.split("/")[1]] && (
+          <Link
+            textStyle="2xl"
+            color="blue.subtle"
+            fontWeight="medium"
+            height="100%"
+            textDecoration="none"
+            onClick={() =>
+              navigate(pathNav[location.pathname.split("/")[1]].url)
+            }
           >
-            <MenuIcon />
-          </IconButton>
-
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            slotProps={{
-              list: {
-              'aria-labelledby': 'basic-button',
-              },
-            }}
-          >
-          { items.map((item) => <MenuItem key={item.label} sx={{ flexGrow: 1, px: 4 }} onClick={()=> handleMenu(item.url)}>{item.label}</MenuItem>) }
-          </Menu>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
-    </Box>
+            {pathNav[location.pathname.split("/")[1]].label}
+          </Link>
+        )}
+      </Box>
+    </Flex>
   );
 }
-
-//            <MenuItem onClick={handleClose}>My account</MenuItem>
-//            <MenuItem onClick={handleClose}>Logout</MenuItem>

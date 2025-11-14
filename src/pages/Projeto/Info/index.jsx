@@ -4,6 +4,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./styles.css";
 import {
   Badge,
+  Bleed,
   Box,
   Card,
   DataList,
@@ -16,37 +17,69 @@ import {
 } from "@chakra-ui/react";
 import { LuFolder, LuSquareCheck, LuUser } from "react-icons/lu";
 import { badgeStatus } from "../../../utils/badge";
-import { LiaFileInvoiceSolid } from "react-icons/lia";
 
-export function RequisicaoInfo() {
-  const { requisicaoId } = useParams();
+export function ProjetoInfo() {
+  const { projetoId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [requisicao, setRequisicao] = useState({
-    id: 10,
-    requisicao: "063000",
-    nome: "Materiais de serralheria - Obra - BS",
-    justificativa:
-      "Pedido para ser utilizado os m ateriais na serralheira, em todo o tem que quiser fazer algum mível para ser utilizado na UNISUAM.",
-    data_abertura: "13/11/2025",
-    status: "PEND_COT",
-    itens: [
+  const [projeto, setProjeto] = useState({
+    id: 1,
+    codigo: "PROO341 - Clínica veterinária",
+    classificacao: "OPEX",
+    nome: "Clínica veterinária - BS",
+    unidade: "BS",
+    status: "Ativo",
+    data_abertura: "20/05/2025",
+    orcamento: [
       {
-        id: "20",
-        codigo: "50.56.00028",
-        descricao: "LAMPADA FLUORESCENTE TUBULAR 40W",
-        quantidade: 25,
-        centro_custo: {
-          id: 1,
-          codigo: "01.004.008.02",
-          nome: "Facilities",
-        },
-        conta_contabil: {
-          id: 1,
-          codigo: "1321305",
-          nome: "Obras",
-        },
+        mes: "JANEIRO",
+        valor: 150.5,
+      },
+      {
+        mes: "FEVEREIRO",
+        valor: 150.5,
+      },
+      {
+        mes: "MARÇO",
+        valor: 150.5,
+      },
+      {
+        mes: "ABRIL",
+        valor: 150.5,
+      },
+      {
+        mes: "MAIO",
+        valor: 150.5,
+      },
+    ],
+    requisicoes: [
+      {
+        id: 10,
+        requisicao: "063000",
+        nome: "Materiais de serralheria - Obra - BS",
+        justificativa:
+          "Pedido para ser utilizado os m ateriais na serralheira, em todo o tem que quiser fazer algum mível para ser utilizado na UNISUAM.",
+        data_abertura: "13/11/2025",
+        status: "PEND_COT",
+        itens: [
+          {
+            id: "20",
+            codigo: "50.56.00028",
+            descricao: "LAMPADA FLUORESCENTE TUBULAR 40W",
+            quantidade: 25,
+            centro_custo: {
+              id: 1,
+              codigo: "01.004.008.02",
+              nome: "Facilities",
+            },
+            conta_contabil: {
+              id: 1,
+              codigo: "1321305",
+              nome: "Obras",
+            },
+          },
+        ],
       },
     ],
   });
@@ -68,57 +101,51 @@ export function RequisicaoInfo() {
             Informações
           </Tabs.Trigger>
           <Tabs.Trigger
-            onClick={() => navigate("#itens")}
-            value="itens"
+            onClick={() => navigate("#orcamento")}
+            value="orcamento"
             color={"white"}
           >
             <LuFolder />
-            Itens
+            Orçamento
           </Tabs.Trigger>
           <Tabs.Trigger
-            onClick={() => navigate("#notasfiscais")}
-            value="notasfiscais"
+            onClick={() => navigate("#requisicoes")}
+            value="requisicoes"
             color={"white"}
           >
-            <LiaFileInvoiceSolid />
-            Notas fiscais
+            <LuSquareCheck />
+            Requisições
           </Tabs.Trigger>
           <Tabs.Indicator rounded="l2" bg="blue.600" />
         </Tabs.List>
 
-        {/* <Tabs.Content value="informacoes" p="6">
+        <Tabs.Content value="informacoes" p="6">
           <DataList.Root orientation="horizontal" size="md">
             <DataList.Item variant="bold">
               <DataList.ItemLabel>Código</DataList.ItemLabel>
-              <DataList.ItemValue>{requisicao.codigo}</DataList.ItemValue>
+              <DataList.ItemValue>{projeto.codigo}</DataList.ItemValue>
             </DataList.Item>
 
             <DataList.Item variant="bold">
               <DataList.ItemLabel>Nome</DataList.ItemLabel>
-              <DataList.ItemValue>{requisicao.nome}</DataList.ItemValue>
+              <DataList.ItemValue>{projeto.nome}</DataList.ItemValue>
             </DataList.Item>
 
             <DataList.Item variant="bold">
               <DataList.ItemLabel>Unidade</DataList.ItemLabel>
-              <DataList.ItemValue>{requisicao.unidade}</DataList.ItemValue>
+              <DataList.ItemValue>{projeto.unidade}</DataList.ItemValue>
             </DataList.Item>
 
             <DataList.Item variant="bold">
               <DataList.ItemLabel>Data cadastrado</DataList.ItemLabel>
-              <DataList.ItemValue>
-                {requisicao.data_abertura}
-              </DataList.ItemValue>
+              <DataList.ItemValue>{projeto.data_abertura}</DataList.ItemValue>
             </DataList.Item>
 
             <DataList.Item variant="bold">
               <DataList.ItemLabel>Status</DataList.ItemLabel>
               <DataList.ItemValue>
-                <Badge
-                  colorPalette={badgeStatus[requisicao.status]}
-                  py="1"
-                  px="2"
-                >
-                  {requisicao.status}
+                <Badge colorPalette={badgeStatus[projeto.status]} py="1" px="2">
+                  {projeto.status}
                 </Badge>
               </DataList.ItemValue>
             </DataList.Item>
@@ -128,12 +155,10 @@ export function RequisicaoInfo() {
         <Tabs.Content value="orcamento" p="6">
           <DataList.Root orientation="horizontal" size="lg" pb="5" px="10">
             <DataList.Item>
-              <DataList.ItemLabel color="black" fontWeight="medium">
-                Valor total
-              </DataList.ItemLabel>
+              <DataList.ItemLabel color="black" fontWeight="medium">Valor total</DataList.ItemLabel>
               <DataList.ItemValue color="black" fontWeight="bolder">
                 <FormatNumber
-                  value={requisicao.orcamento.reduce((acc, cur) => {
+                  value={projeto.orcamento.reduce((acc, cur) => {
                     return acc + cur.valor;
                   }, 0)}
                   style="currency"
@@ -151,7 +176,7 @@ export function RequisicaoInfo() {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {requisicao.orcamento.map((orcamento) => {
+              {projeto.orcamento.map((orcamento) => {
                 return (
                   <Table.Row>
                     <Table.Cell px="4">{orcamento.mes}</Table.Cell>
@@ -170,7 +195,7 @@ export function RequisicaoInfo() {
         </Tabs.Content>
 
         <Tabs.Content value="requisicoes" p="6">
-          {requisicao.requisicoes.map((requisicao) => {
+          {projeto.requisicoes.map((requisicao) => {
             return (
               <Stack>
                 <Card.Root
@@ -217,7 +242,7 @@ export function RequisicaoInfo() {
               </Stack>
             );
           })}
-        </Tabs.Content> */}
+        </Tabs.Content>
       </Tabs.Root>
     </Box>
   );
