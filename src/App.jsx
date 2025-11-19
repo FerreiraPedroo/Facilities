@@ -5,6 +5,7 @@ import { ProjetoLista } from "@pages/Projeto/Lista";
 import { ProjetoInfo } from "@pages/Projeto/Info";
 import { RequisicaoLista } from "@pages/Requisicao/Lista";
 import { RequisicaoInfo } from "@pages/Requisicao/Info";
+import { ProjetoNovo } from "./pages/Projeto/Novo";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Route index element={<Home />} />
 
         <Route path="/projetos" element={<ProjetoLista />} />
+        <Route path="/projetos/novo" element={<ProjetoNovo />} />
         <Route path="/projetos/:projetoId" element={<ProjetoInfo />} />
 
         <Route path="/requisicoes" element={<RequisicaoLista />} />

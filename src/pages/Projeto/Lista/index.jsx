@@ -29,7 +29,12 @@ export function ProjetoLista() {
   return (
     <Container padding={0}>
       <Group h="64px" bg="blue.800" py="4" px="6" width="100%">
-        <Button variant="surface" size="xs" _hover={{ bg: "blue.muted", color: "fg" }}>
+        <Button
+          variant="surface"
+          size="xs"
+          _hover={{ bg: "blue.muted", color: "fg" }}
+          onClick={() => navigate("/projetos/novo")}
+        >
           Novo projeto
         </Button>
         {/* <Button
