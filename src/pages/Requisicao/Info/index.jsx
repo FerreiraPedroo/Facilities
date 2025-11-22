@@ -37,6 +37,44 @@ export function RequisicaoInfo() {
         codigo: "50.56.00028",
         descricao: "LAMPADA FLUORESCENTE TUBULAR 40W",
         quantidade: 25,
+        valor_orcado: 2.40,
+        valor_nf: 3.40,
+        centro_custo: {
+          id: 1,
+          codigo: "01.004.008.02",
+          nome: "Facilities",
+        },
+        conta_contabil: {
+          id: 1,
+          codigo: "1321305",
+          nome: "Obras",
+        },
+      },
+      {
+        id: "20",
+        codigo: "50.56.00028",
+        descricao: "LAMPADA FLUORESCENTE TUBULAR 40W",
+        quantidade: 25,
+        valor_orcado: 2.40,
+        valor_nf: 3.40,
+        centro_custo: {
+          id: 1,
+          codigo: "01.004.008.02",
+          nome: "Facilities",
+        },
+        conta_contabil: {
+          id: 1,
+          codigo: "1321305",
+          nome: "Obras",
+        },
+      },
+      {
+        id: "20",
+        codigo: "50.56.00028",
+        descricao: "LAMPADA FLUORESCENTE TUBULAR 40W",
+        quantidade: 25,
+        valor_orcado: 2.40,
+        valor_nf: 3.40,
         centro_custo: {
           id: 1,
           codigo: "01.004.008.02",
@@ -86,28 +124,11 @@ export function RequisicaoInfo() {
           <Tabs.Indicator rounded="l2" bg="blue.600" />
         </Tabs.List>
 
-        {/* <Tabs.Content value="informacoes" p="6">
+        <Tabs.Content value="informacoes" p="6">
           <DataList.Root orientation="horizontal" size="md">
             <DataList.Item variant="bold">
-              <DataList.ItemLabel>Código</DataList.ItemLabel>
-              <DataList.ItemValue>{requisicao.codigo}</DataList.ItemValue>
-            </DataList.Item>
-
-            <DataList.Item variant="bold">
-              <DataList.ItemLabel>Nome</DataList.ItemLabel>
-              <DataList.ItemValue>{requisicao.nome}</DataList.ItemValue>
-            </DataList.Item>
-
-            <DataList.Item variant="bold">
-              <DataList.ItemLabel>Unidade</DataList.ItemLabel>
-              <DataList.ItemValue>{requisicao.unidade}</DataList.ItemValue>
-            </DataList.Item>
-
-            <DataList.Item variant="bold">
-              <DataList.ItemLabel>Data cadastrado</DataList.ItemLabel>
-              <DataList.ItemValue>
-                {requisicao.data_abertura}
-              </DataList.ItemValue>
+              <DataList.ItemLabel>Requisição</DataList.ItemLabel>
+              <DataList.ItemValue>{requisicao.requisicao}</DataList.ItemValue>
             </DataList.Item>
 
             <DataList.Item variant="bold">
@@ -122,19 +143,51 @@ export function RequisicaoInfo() {
                 </Badge>
               </DataList.ItemValue>
             </DataList.Item>
+
+            <DataList.Item variant="bold">
+              <DataList.ItemLabel>Nome</DataList.ItemLabel>
+              <DataList.ItemValue>{requisicao.nome}</DataList.ItemValue>
+            </DataList.Item>
+
+            <DataList.Item variant="bold">
+              <DataList.ItemLabel>Justificativa</DataList.ItemLabel>
+              <DataList.ItemValue>{requisicao.justificativa}</DataList.ItemValue>
+            </DataList.Item>
+
+            <DataList.Item variant="bold">
+              <DataList.ItemLabel>Data de abertura</DataList.ItemLabel>
+              <DataList.ItemValue>
+                {requisicao.data_abertura}
+              </DataList.ItemValue>
+            </DataList.Item>
+
           </DataList.Root>
         </Tabs.Content>
 
-        <Tabs.Content value="orcamento" p="6">
-          <DataList.Root orientation="horizontal" size="lg" pb="5" px="10">
+        <Tabs.Content value="itens" p="6">
+          <DataList.Root orientation="horizontal" size="md" pb="5" px="10">
             <DataList.Item>
-              <DataList.ItemLabel color="black" fontWeight="medium">
-                Valor total
+              <DataList.ItemLabel color="black" fontWeight="medium" width="136px">
+                Valor orçado
               </DataList.ItemLabel>
               <DataList.ItemValue color="black" fontWeight="bolder">
                 <FormatNumber
-                  value={requisicao.orcamento.reduce((acc, cur) => {
-                    return acc + cur.valor;
+                  value={requisicao.itens.reduce((acc, cur) => {
+                    return acc + (cur.valor_orcado * cur.quantidade);
+                  }, 0)}
+                  style="currency"
+                  currency="BRL"
+                />
+              </DataList.ItemValue>
+            </DataList.Item>
+            <DataList.Item>
+              <DataList.ItemLabel color="black" fontWeight="medium" width="136px">
+                Valor NF
+              </DataList.ItemLabel>
+              <DataList.ItemValue color="black" fontWeight="bolder">
+                <FormatNumber
+                  value={requisicao.itens.reduce((acc, cur) => {
+                    return acc + (cur.valor_nf * cur.quantidade);
                   }, 0)}
                   style="currency"
                   currency="BRL"
@@ -143,21 +196,25 @@ export function RequisicaoInfo() {
             </DataList.Item>
           </DataList.Root>
 
-          <Table.Root size="sm" variant="outline" width="320px">
+          <Table.Root size="sm" variant="outline">
             <Table.Header>
               <Table.Row>
-                <Table.ColumnHeader px="4">MÊS</Table.ColumnHeader>
-                <Table.ColumnHeader>VALOR</Table.ColumnHeader>
+                <Table.ColumnHeader px="4">CÓDIGO</Table.ColumnHeader>
+                <Table.ColumnHeader px="2">ITEM</Table.ColumnHeader>
+                <Table.ColumnHeader>QUANTIDADE</Table.ColumnHeader>
+                <Table.ColumnHeader px="4">VALOR</Table.ColumnHeader>
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {requisicao.orcamento.map((orcamento) => {
+              {requisicao.itens.map((item) => {
                 return (
                   <Table.Row>
-                    <Table.Cell px="4">{orcamento.mes}</Table.Cell>
-                    <Table.Cell>
+                    <Table.Cell px="4">{item.codigo}</Table.Cell>
+                    <Table.Cell px="2" width="80%">{item.descricao}</Table.Cell>
+                      <Table.Cell textAlign="center">{item.quantidade}</Table.Cell>
+                    <Table.Cell px="4" minWidth="128px">
                       <FormatNumber
-                        value={orcamento.valor}
+                        value={item.valor_orcado}
                         style="currency"
                         currency="BRL"
                       />
@@ -169,7 +226,7 @@ export function RequisicaoInfo() {
           </Table.Root>
         </Tabs.Content>
 
-        <Tabs.Content value="requisicoes" p="6">
+        {/* <Tabs.Content value="requisicoes" p="6">
           {requisicao.requisicoes.map((requisicao) => {
             return (
               <Stack>
