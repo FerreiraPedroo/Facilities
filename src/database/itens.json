@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "codigo": "5.1268",
+    "descricao": "PREGO DECK S/ CABEÇA POLIDO 17 X 27 - SC. 1KG",
+    "unidade_medida": "Unidade",
+    "categoria": "Civil",
+    "sub_categoria": "",
+    "imagem": [],
+    "fabricante": [],
+    "link_referencia": "https://www.obramax.com.br/prego-com-cabeca-polido-17x27-1kg-89271994/p"
+  },
+  {
+    "id": 2,
+    "codigo": "5.2506",
+    "descricao": "LÂMINA DE SERRA TICO TICO UNI BU38 - KIT 5",
+    "unidade_medida": "Unidade",
+    "categoria": "Civil",
+    "sub_categoria": "",
+    "imagem": [],
+    "fabricante": [
+      {
+        "id": 1,
+        "nome": "Starret",
+        "referencia": "",
+        "link_referencia_fabricante": ""
+      }
+    ],
+    "link_referencia": "https://www.mercadolivre.com.br/lamina-de-serra-tico-tico-kit-5-uni-bu38100-starrett/up/MLBU1384749435?pdp_filters=item_id:MLB3349294017&matt_tool=44747869&matt_internal_campaign_id=&matt_word=&matt_source=google&matt_campaign_id=22603531439&matt_ad_group_id=183641039649&matt_match_type=&matt_network=g&matt_device=c&matt_creative=758138322197&matt_keyword=&matt_ad_position=&matt_ad_type=pla&matt_merchant_id=108024908&matt_product_id=MLB3349294017&matt_product_partition_id=2424646252682&matt_target_id=pla-2424646252682&cq_src=google_ads&cq_cmp=22603531439&cq_net=g&cq_plt=gp&cq_med=pla&gad_source=1&gad_campaignid=22603531439&gbraid=0AAAAAD93qcBaQVfW5YqPP9nUfW4FIfeJ1&gclid=CjwKCAiAw9vIBhBBEiwAraSATlmqFctoWiZlqeRVrLMESTqrfi7LPO5qAF6g7rlKPlvNAsz0T48yhRoCW-wQAvD_BwE"
+  },
+  {
+    "id": 3,
+    "codigo": "5.2507",
+    "descricao": "KIT JOGO FRESAS TUPIA 6MM 12 PEÇAS",
+    "unidade_medida": "Jogo",
+    "categoria": "",
+    "sub_categoria": "",
+    "imagem": ["52507.png"],
+    "fabricante": [],
+    "link_referencia": "https://www.mercadolivre.com.br/kit-jogo-fresas-tupia-6mm-metala-ferramentas-12-pecas/p/MLB2039947325?pdp_filters=item_id%3AMLB5917890198&from=gshop&matt_tool=29851250&matt_internal_campaign_id=&matt_word=&matt_source=google&matt_campaign_id=22090354004&matt_ad_group_id=173090517116&matt_match_type=&matt_network=g&matt_device=c&matt_creative=727882725735&matt_keyword=&matt_ad_position=&matt_ad_type=pla&matt_merchant_id=735125422&matt_product_id=MLB2039947325-product&matt_product_partition_id=2393411037012&matt_target_id=pla-2393411037012&cq_src=google_ads&cq_cmp=22090354004&cq_net=g&cq_plt=gp&cq_med=pla&gad_source=4&gad_campaignid=22090354004&gbraid=0AAAAAD93qcCmBmiBVOiR2GWuA5m3GBHbQ&gclid=CjwKCAiAw9vIBhBBEiwAraSATjScANPnyQen3ODDUPjPA9E-ujJB6FohXHiiV2CpkoTK1FgTmGKyLBoCPz0QAvD_BwE"
+  }
+]
