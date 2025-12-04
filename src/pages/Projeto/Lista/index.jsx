@@ -5,7 +5,7 @@ import "./styles.css";
 
 import { badgeStatus } from "@/utils/badge";
 import { bancoDeDados } from "@/repositories/projeto.repository";
-import { Badge, Box, Center, Container, Table } from "@chakra-ui/react";
+import { Badge, Box, Button, Center, Container, Group, Table } from "@chakra-ui/react";
 
 export function ProjetoLista() {
   const navigate = useNavigate();
