@@ -4,33 +4,47 @@ import { useNavigate } from "react-router-dom";
 import unidades from "../../../database/unidades.json";
 
 import "./styles.css";
+
+import { LuFolder, LuUser } from "react-icons/lu";
+import { bancoDeDados } from "@/repositories/projeto.repository";
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   Box,
-  DataList,
-  Field,
-  For,
-  FormatNumber,
+  CloseButton,
+  Flex,
+  FormControl,
+  FormLabel,
   Input,
   NativeSelect,
-  NumberInput,
+  Select,
   Stack,
   Switch,
-  Table,
+  Tab,
+  TabList,
   Tabs,
+  Text,
 } from "@chakra-ui/react";
-import { LuFolder, LuUser } from "react-icons/lu";
-import { badgeStatus } from "../../../utils/badge";
+
+const tabPosition = {
+  informacoes: 0,
+  orcamento: 1,
+};
 
 export function ProjetoNovo() {
   const navigate = useNavigate();
+  const [formError, setFormError] = useState([]);
 
   const [projeto, setProjeto] = useState({
     codigo: "",
-    classificacao: "",
+    periodo: "",
     nome: "",
-    unidade: "",
+    unidade_id: "",
+    classificacao: "",
     status: "",
-    data_abertura: "",
+    data_abertura: new Date().toISOString(),
     orcamento: {
       janeiro: "",
       fevereiro: "",
@@ -48,8 +62,6 @@ export function ProjetoNovo() {
   });
 
   const handleValue = useCallback((e, name) => {
-    console.log(e);
-
     if (
       [
         "janeiro",
@@ -68,7 +80,7 @@ export function ProjetoNovo() {
     ) {
       setProjeto((prev) => {
         const novo = { ...prev };
-        novo.orcamento[name] = e.valueAsNumber || "";
+        novo.orcamento[name] = e.valueAsNumber || 0;
         return novo;
       });
     } else {
@@ -79,7 +91,53 @@ export function ProjetoNovo() {
       });
     }
   }, []);
-  console.log(projeto);
+
+  const handleModal = () => {
+    const item = Object.entries({ ...projeto }).reduce((acc, [key, value]) => {
+      if (value instanceof Object) {
+        if (!Object.entries({ ...value }).find(([, v]) => v)) {
+          acc.push(
+            key.charAt(0).toUpperCase() +
+              key.slice(1) +
+              " - é necessário pelo menos um mês de orçamento."
+          );
+        }
+      } else if (!value) {
+        acc.push(key.charAt(0).toUpperCase() + key.slice(1));
+      }
+      return acc;
+    }, []);
+    setFormError(item);
+  };
+
+  const handleNovoForm = () => {
+    bancoDeDados.adicionarProjeto({ ...projeto });
+
+    setProjeto({
+      codigo: "",
+      periodo: "",
+      nome: "",
+      unidade_id: "",
+      classificacao: "",
+      status: "",
+      data_abertura: new Date().toISOString(),
+      orcamento: {
+        janeiro: "",
+        fevereiro: "",
+        marco: "",
+        abril: "",
+        maio: "",
+        junho: "",
+        julho: "",
+        agosto: "",
+        setembro: "",
+        outubro: "",
+        novembro: "",
+        dezembro: "",
+      },
+    });
+  };
+
   return (
     <Box>
       <Tabs.Root
@@ -96,6 +154,7 @@ export function ProjetoNovo() {
             <LuUser />
             Informações
           </Tabs.Trigger>
+
           <Tabs.Trigger
             onClick={() => navigate("#orcamento")}
             value="orcamento"
@@ -163,10 +222,7 @@ export function ProjetoNovo() {
                   <For each={["CAPEX", "OPEX"]}>
                     {(classif) => {
                       return (
-                        <option
-                          key={classif}
-                          value={classif}
-                        >
+                        <option key={classif} value={classif}>
                           {classif}
                         </option>
                       );
@@ -261,4 +317,24 @@ export function ProjetoNovo() {
       </Tabs.Root>
     </Box>
   );
+}
+
+{
+  /* <Alert status="success">
+          <AlertIcon />
+          <Box>
+            <AlertTitle>Success!</AlertTitle>
+            <AlertDescription>
+              Your application has been received. We will review your
+              application and respond within the next 48 hours.
+            </AlertDescription>
+          </Box>
+          <CloseButton
+            alignSelf="flex-start"
+            position="relative"
+            right={-1}
+            top={-1}
+            onClick={() => null}
+          />
+        </Alert> */
 }

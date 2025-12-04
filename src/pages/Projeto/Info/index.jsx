@@ -178,7 +178,7 @@ export function ProjetoInfo() {
             <Table.Body>
               {projeto.orcamento.map((orcamento) => {
                 return (
-                  <Table.Row>
+                  <Table.Row key={orcamento.mes}>
                     <Table.Cell px="4">{orcamento.mes}</Table.Cell>
                     <Table.Cell>
                       <FormatNumber
@@ -197,7 +197,7 @@ export function ProjetoInfo() {
         <Tabs.Content value="requisicoes" p="6">
           {projeto.requisicoes.map((requisicao) => {
             return (
-              <Stack>
+              <Stack key={requisicao.id}>
                 <Card.Root
                   size="sm"
                   borderWidth="1px"

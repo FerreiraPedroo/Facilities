@@ -43,7 +43,7 @@ export function MenuCaminho({ caminho }) {
             {(size, index) => {
               const caminhoAtual = caminho.slice(0, index + 1);
               const result = caminhoRecursivo(caminhoAtual);
-
+              
               if (!result) {
                 return null;
               }
