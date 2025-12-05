@@ -6,13 +6,19 @@ import { MenuCaminho } from "../../utils/breadCrumb";
 
 const items = [
   {
+    id: 1,
+    label: "Itens",
+    icon: "",
+    url: "/itens",
+  },
+  {
     id: 2,
     label: "Projetos",
     icon: "",
     url: "/projetos",
   },
   {
-    id: 1,
+    id: 3,
     label: "Requisicões",
     icon: "",
     url: "/requisicoes",

@@ -3,6 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { Fragment } from "react/jsx-runtime";
 
 const caminhoNav = {
+  itens: {
+    label: "Itens",
+    url: "/itens",
+    novo: {
+      label: "Novo",
+    },
+  },
   projetos: {
     label: "Projetos",
     url: "/projetos",
@@ -42,8 +49,12 @@ export function MenuCaminho({ caminho }) {
           <For each={caminho}>
             {(size, index) => {
               const caminhoAtual = caminho.slice(0, index + 1);
+
+              // if(typeof caminhoAtual == "number"){
+              //   console.log("OK")
+              // }
               const result = caminhoRecursivo(caminhoAtual);
-              
+
               if (!result) {
                 return null;
               }
