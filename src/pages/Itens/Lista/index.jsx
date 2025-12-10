@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ItemRepository } from "@/repositories/itens.repository";
+import { TreeViewComponent } from "../../../components/TreeView";
 
 import "./styles.css";
 // import { badgeStatus } from "../../../utils/badge";
@@ -13,19 +15,23 @@ import {
   Table,
 } from "@chakra-ui/react";
 import { badgeStatus } from "../../../utils/badge";
-import { TreeViewComponent } from "../../../components/TreeView";
 
-export function ItensLista() {
+export function ItensList() {
   const navigate = useNavigate();
 
-  const [itensLista, setItensLista] = useState([
-    {
-      id: 1,
-      codigo: "50.56.00028",
-      descricao: "LAMPADA FLUORESCENTE TUBULAR 40W",
-      status: "Ativo",
-    },
-  ]);
+  const [itensList, setItensList] = useState([]);
+
+  useEffect(() => {
+    async function getItens() {
+      try {
+        const itens = await ItemRepository.getItensList();
+        setItensList(itens);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    getItens();
+  }, []);
 
   return (
     <Container padding={0}>
@@ -41,16 +47,16 @@ export function ItensLista() {
       </Group>
 
       <Flex>
-        <Box paddingY="6" paddingX="4">
+        {/* <Box paddingY="6" paddingX="4">
           <TreeViewComponent colorPalette={"green"}></TreeViewComponent>
-        </Box>
+        </Box> */}
 
         <Box paddingY="6" paddingX="4" w="full">
           <Table.Root size="sm" variant="outline" interactive showColumnBorder>
             <Table.Header>
               <Table.Row bg="silver">
                 <Table.ColumnHeader
-                  minW={"128px"}
+                  minW={"96px"}
                   textAlign={"center"}
                   userSelect={"none"}
                 >
@@ -62,11 +68,19 @@ export function ItensLista() {
                   textAlign={"center"}
                   userSelect={"none"}
                 >
-                  DESCRIÇÃO
+                  NOME
                 </Table.ColumnHeader>
 
                 <Table.ColumnHeader
-                  minW={"128px"}
+                  minW={"160px"}
+                  textAlign={"center"}
+                  userSelect={"none"}
+                >
+                  CATEGORIA
+                </Table.ColumnHeader>
+
+                <Table.ColumnHeader
+                  minW={"96px"}
                   textAlign={"center"}
                   userSelect={"none"}
                 >
@@ -76,14 +90,15 @@ export function ItensLista() {
             </Table.Header>
 
             <Table.Body>
-              {itensLista.map((item) => (
+              {itensList.map((item) => (
                 <Table.Row
                   key={item.id}
                   _hover={{ bg: "slate", cursor: "pointer" }}
                   onClick={() => navigate(`/itens/${item.id}`)}
                 >
-                  <Table.Cell textAlign={"center"}>{item.codigo}</Table.Cell>
-                  <Table.Cell>{item.descricao}</Table.Cell>
+                  <Table.Cell textAlign={"center"}>{item.code}</Table.Cell>
+                  <Table.Cell>{item.name}</Table.Cell>
+                  <Table.Cell>{item.category?.name}</Table.Cell>
                   <Table.Cell textAlign={"center"}>
                     <Badge colorPalette={badgeStatus[item.status]} p="2">
                       {item.status}

@@ -1,14 +1,15 @@
 import { Routes, Route } from "react-router-dom";
 import { Root } from "@pages/Root";
 import { Home } from "@pages/Home";
-import { ProjetoLista } from "@pages/Projeto/Lista";
-import { ProjetoInfo } from "@pages/Projeto/Info";
 import { RequisicaoLista } from "@pages/Requisicao/Lista";
 import { RequisicaoInfo } from "@pages/Requisicao/Info";
-import { ProjetoNovo } from "@pages/Projeto/Novo";
-import { ItensLista } from "@pages/Itens/Lista";
+import { ItensList } from "@pages/Itens/Lista";
 import { ItemNovo } from "@pages/Itens/Novo";
+import { ProjectNew } from "./pages/Project/New";
+import { ProjectList } from "./pages/Project/List";
+import { ProjectInfo } from "./pages/Project/Info";
 
+// import "./database/seed";
 
 function App() {
   return (
@@ -16,11 +17,11 @@ function App() {
       <Route path="/" element={<Root />}>
         <Route index element={<Home />} />
 
-        <Route path="/itens" element={<ItensLista />} />
+        <Route path="/itens" element={<ItensList />} />
         <Route path="/itens/novo" element={<ItemNovo />} />
-        <Route path="/projetos" element={<ProjetoLista />} />
-        <Route path="/projetos/novo" element={<ProjetoNovo />} />
-        <Route path="/projetos/:projetoId" element={<ProjetoInfo />} />
+        <Route path="/projetos" element={<ProjectList />} />
+        <Route path="/projetos/novo" element={<ProjectNew />} />
+        <Route path="/projetos/:projectId" element={<ProjectInfo />} />
 
         <Route path="/requisicoes" element={<RequisicaoLista />} />
         <Route path="/requisicoes/:requisaoId" element={<RequisicaoInfo />} />

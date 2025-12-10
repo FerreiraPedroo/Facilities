@@ -4,17 +4,26 @@ import { useNavigate } from "react-router-dom";
 import "./styles.css";
 
 import { badgeStatus } from "@/utils/badge";
-import { bancoDeDados } from "@/repositories/projeto.repository";
-import { Badge, Box, Button, Center, Container, Group, Table } from "@chakra-ui/react";
+import { ProjectRepository } from "@/repositories/project.repository";
+import {
+  Badge,
+  Box,
+  Button,
+  Center,
+  Container,
+  Group,
+  Table,
+} from "@chakra-ui/react";
 
-export function ProjetoLista() {
+export function ProjectList() {
   const navigate = useNavigate();
 
   const [projetoLista, setProjetoLista] = useState(null);
 
   useEffect(() => {
     async function dados() {
-      const projetos = await bancoDeDados.obterProjetos();
+      const projetos = await ProjectRepository.getProjects();
+      console.log(projetos)
       setProjetoLista(projetos);
     }
     dados();
@@ -52,7 +61,7 @@ export function ProjetoLista() {
                   ID
                 </Table.ColumnHeader>
                 <Table.ColumnHeader
-                  width={"256px"}
+                  width={"160px"}
                   textAlign={"center"}
                   userSelect={"none"}
                 >
@@ -62,7 +71,7 @@ export function ProjetoLista() {
                   NOME
                 </Table.ColumnHeader>
                 <Table.ColumnHeader
-                  width={"128px"}
+                  width={"160px"}
                   textAlign={"center"}
                   userSelect={"none"}
                 >
@@ -76,7 +85,7 @@ export function ProjetoLista() {
                   CLASSIFICAÇÃO
                 </Table.ColumnHeader>
                 <Table.ColumnHeader
-                  width={"128px"}
+                  width={"96px"}
                   textAlign={"center"}
                   userSelect={"none"}
                 >
@@ -92,13 +101,13 @@ export function ProjetoLista() {
                   onClick={() => navigate(`/projetos/${projeto.id}`)}
                 >
                   <Table.Cell textAlign={"center"}>{projeto.id}</Table.Cell>
-                  <Table.Cell textAlign={"center"}>{projeto.codigo}</Table.Cell>
-                  <Table.Cell>{projeto.nome}</Table.Cell>
+                  <Table.Cell textAlign={"center"}>{projeto.code}</Table.Cell>
+                  <Table.Cell>{projeto.name}</Table.Cell>
                   <Table.Cell textAlign={"center"}>
-                    {projeto.unidade}
+                    {projeto.unit?.name}
                   </Table.Cell>
                   <Table.Cell textAlign={"center"}>
-                    {projeto.classificacao}
+                    {projeto.classification}
                   </Table.Cell>
                   <Table.Cell textAlign={"center"}>
                     <Badge
@@ -117,7 +126,6 @@ export function ProjetoLista() {
           <Center>Nenhum projeto cadastrado</Center>
         )}
       </Box>
-      
     </Container>
   );
 }

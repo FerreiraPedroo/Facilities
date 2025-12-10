@@ -25,5 +25,18 @@ export default defineConfig([
     rules: {
       "no-unused-vars": ["error", { varsIgnorePattern: "^[A-Z_]" }],
     },
+    "import/resolver": {
+      typescript: {},
+      alias: {
+        map: [
+          ["@", "./src"],
+          ["@pages", "./src/pages"],
+          ["@utils", "./src/utils"],
+          ["@services", "./src/services"],
+          ["@components", "./src/components"],
+        ],
+        extensions: [".ts", ".tsx", ".js", ".jsx"],
+      },
+    },
   },
 ]);

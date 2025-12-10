@@ -9,14 +9,15 @@
     "strictFunctionTypes": true,
     "strict": true,
 
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"],
-      "@pages": ["src/pages/*"],
-      "@utils": ["src/utils/*"],
-      "@services": ["src/services/*"],
-      "@components": ["src/components/*"]
+      "@/*": ["src/*"],
+      "@pages/*": ["/src/pages/*"],
+      "@utils/*": ["src/utils/*"],
+      "@services/*": ["/src/services/*"],
+      "@components/*": ["src/components/*"]
     }
   },
+  "include": ["src"],
   "exclude": ["node_modules", "**/node_modules/*"]
 }

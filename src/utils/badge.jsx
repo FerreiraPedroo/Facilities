@@ -6,6 +6,7 @@ const requisicaoStatus = {
 }
 export const badgeStatus = {
     "Ativo": "green",
+    "ATIVO":"green",
     "Cancelado": "red",
     "Finalizado": "cyan",
     ...requisicaoStatus

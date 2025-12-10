@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
+import { LuFolder, LuSquareCheck, LuUser } from "react-icons/lu";
+import { LiaFileInvoiceSolid } from "react-icons/lia";
+import { badgeStatus } from "../../../utils/badge";
+
 import "./styles.css";
 import {
   Badge,
@@ -14,9 +18,6 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
-import { LuFolder, LuSquareCheck, LuUser } from "react-icons/lu";
-import { badgeStatus } from "../../../utils/badge";
-import { LiaFileInvoiceSolid } from "react-icons/lia";
 
 export function RequisicaoInfo() {
   const { requisicaoId } = useParams();

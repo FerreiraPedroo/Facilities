@@ -1,14 +1,27 @@
-export interface IProjeto {
+import { IPurchaseRequisition } from "./purchase_requisition.interface";
+import { IUnit } from "./unit.interface";
+
+export interface IProject {
   id: number;
-  codigo: string;
-  classificacao: string;
-  nome: string;
-  unidade_id: string;
+  code: string;
+  classification: string;
+  name: string;
+  unit_id: number;
   status: string;
-  data_abertura: string;
+  budgets: [number | null];
+  date_open: string;
 }
 
-interface IOrcamento {}
-export interface INovoProjeto extends IProjeto {
-  orcamento: IOrcamento;
+interface IBudget {}
+
+export interface INewProject extends IProject {
+  budget: IBudget;
+}
+
+export interface IGetProjectList extends IProject {
+  unit: IUnit | null;
+}
+export interface IGetProject extends IProject {
+  requisitions: IPurchaseRequisition[];
+  unit: IUnit | null;
 }
