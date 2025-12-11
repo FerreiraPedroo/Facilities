@@ -1,10 +1,5 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ItemRepository } from "@/repositories/itens.repository";
-import { TreeViewComponent } from "../../../components/TreeView";
-
-import "./styles.css";
-// import { badgeStatus } from "../../../utils/badge";
 import {
   Badge,
   Box,
@@ -14,17 +9,30 @@ import {
   Group,
   Table,
 } from "@chakra-ui/react";
+
+import { ItemRepository } from "@/repositories/itens.repository";
 import { badgeStatus } from "../../../utils/badge";
+import "./styles.css";
+import { ImportFile } from "@/utils/importFile";
 
 export function ItensList() {
   const navigate = useNavigate();
 
   const [itensList, setItensList] = useState([]);
 
+  const handleImportItem = useCallback(async (importItens) => {
+    try {
+      await ItemRepository.saveImportItens(importItens);
+    } catch (e) {
+      console.log({ e });
+    }
+  });
+
   useEffect(() => {
     async function getItens() {
       try {
         const itens = await ItemRepository.getItensList();
+
         setItensList(itens);
       } catch (e) {
         console.log(e);
@@ -33,26 +41,39 @@ export function ItensList() {
     getItens();
   }, []);
 
+  // console.log(itens);
+
   return (
     <Container padding={0}>
-      <Group h="64px" bg="blue.800" py="4" px="6" width="100%">
+      <Flex h="64px" bg="blue.800" py="3" px="6" width="100%" gap="6">
         <Button
           variant="surface"
-          size="xs"
           _hover={{ bg: "blue.muted", color: "fg" }}
           onClick={() => navigate("/itens/novo")}
         >
           Novo item
         </Button>
-      </Group>
+
+        <ImportFile textButton={"Importar item"} callBack={handleImportItem} />
+
+        {/* <Button
+          variant={"surface"}
+          _hover={{ bg: "blue.muted", color: "fg" }}
+          onClick={handleImportItem}
+        >
+          Importar item
+        </Button> */}
+      </Flex>
 
       <Flex>
-        {/* <Box paddingY="6" paddingX="4">
-          <TreeViewComponent colorPalette={"green"}></TreeViewComponent>
-        </Box> */}
-
-        <Box paddingY="6" paddingX="4" w="full">
-          <Table.Root size="sm" variant="outline" interactive showColumnBorder>
+        <Box paddingY="4" paddingX="4" w="full">
+          <Table.Root
+            py="0"
+            size="sm"
+            variant="outline"
+            interactive
+            showColumnBorder
+          >
             <Table.Header>
               <Table.Row bg="silver">
                 <Table.ColumnHeader
@@ -97,10 +118,10 @@ export function ItensList() {
                   onClick={() => navigate(`/itens/${item.id}`)}
                 >
                   <Table.Cell textAlign={"center"}>{item.code}</Table.Cell>
-                  <Table.Cell>{item.name}</Table.Cell>
-                  <Table.Cell>{item.category?.name}</Table.Cell>
+                  <Table.Cell px="2">{item.name}</Table.Cell>
+                  <Table.Cell px="2">{item.category?.name}</Table.Cell>
                   <Table.Cell textAlign={"center"}>
-                    <Badge colorPalette={badgeStatus[item.status]} p="2">
+                    <Badge colorPalette={badgeStatus[item.status]} px="2">
                       {item.status}
                     </Badge>
                   </Table.Cell>

@@ -5,7 +5,18 @@ export class ItemRepository {
   static dataBase = db;
 
   static async saveItem(item: IItem) {
-    return await this.dataBase.item.add(item);
+    try {
+      return await this.dataBase.item.add(item);
+    } catch (e) {
+      throw { message: "Não foi possivel salvar." };
+    }
+  }
+  static async saveImportItens(itens: IItem[]) {
+    try {
+      return await this.dataBase.item.bulkAdd(itens);
+    } catch (e) {
+      throw { message: "Não foi possivel importar." };
+    }
   }
   static async getItensList() {
     const itens = await this.dataBase.item.toArray();
@@ -15,11 +26,11 @@ export class ItemRepository {
 
     for (let p = 0; p < itensSize; p++) {
       const category = await this.dataBase.categories.get(
-        itens[p]!.category_id!
+        Number(itens[p]!.category_id!)
       );
 
       const sub_category = await this.dataBase.sub_categories.get(
-        itens[p]!.sub_category_id!
+        Number(itens[p]!.sub_category_id!)
       );
 
       itensWithCategoryAndSub.push({

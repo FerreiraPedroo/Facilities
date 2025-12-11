@@ -11,6 +11,7 @@ import {
   Button,
   Center,
   Container,
+  Flex,
   Group,
   Table,
 } from "@chakra-ui/react";
@@ -20,33 +21,62 @@ export function ProjectList() {
 
   const [projetoLista, setProjetoLista] = useState(null);
 
+  const handleImportProject = async () => {
+    // await ProjectRepository.saveProject({ ...projeto });
+    // setProjeto({
+    //   code: "",
+    //   name: "",
+    //   period: "",
+    //   classificacao: "",
+    //   unit_id: "",
+    //   status: "",
+    //   date_open: new Date().toISOString(),
+    //   budget: {
+    //     janeiro: "",
+    //     fevereiro: "",
+    //     marco: "",
+    //     abril: "",
+    //     maio: "",
+    //     junho: "",
+    //     julho: "",
+    //     agosto: "",
+    //     setembro: "",
+    //     outubro: "",
+    //     novembro: "",
+    //     dezembro: "",
+    //   },
+    // });
+  };
+
   useEffect(() => {
     async function dados() {
       const projetos = await ProjectRepository.getProjects();
-      console.log(projetos)
+      console.log(projetos);
       setProjetoLista(projetos);
     }
     dados();
   }, []);
 
+  // console.log(projetoLista);
+
   return (
     <Container padding={0}>
-      <Group h="64px" bg="blue.800" py="4" px="6" width="100%">
+      <Flex h="64px" bg="blue.800" py="3" px="6" width="100%" gap="6">
         <Button
           variant="surface"
-          size="xs"
           _hover={{ bg: "blue.muted", color: "fg" }}
           onClick={() => navigate("/projetos/novo")}
         >
           Novo projeto
         </Button>
-        {/* <Button
+        <Button
           variant="surface"
           _hover={{ bg: "blue.muted", color: "fg" }}
+          onClick={handleImportProject}
         >
-          Item 2
-        </Button> */}
-      </Group>
+          Importar projeto
+        </Button>
+      </Flex>
 
       <Box paddingY="6" paddingX="4">
         {projetoLista?.length ? (

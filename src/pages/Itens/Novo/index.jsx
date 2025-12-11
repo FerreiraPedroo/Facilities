@@ -7,6 +7,7 @@ import {
   Badge,
   Box,
   Button,
+  Checkbox,
   Container,
   DataList,
   Field,
@@ -30,55 +31,66 @@ import { ItemRepository } from "@/repositories/itens.repository";
 import { CategoryRepository } from "@/repositories/category.repository";
 
 import { LuFolder, LuUser } from "react-icons/lu";
+import { toaster } from "@/components/ui/toaster";
+
+const itemDefault = {
+  code: null,
+  name: null,
+  category_id: null,
+  sub_category_id: null,
+  status: true,
+};
 
 export function ItemNovo() {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
-  const [item, setItem] = useState({});
+  const [item, setItem] = useState(itemDefault);
 
-  const handleImportItem = useCallback(async () => {
-    try {
-      await db.saveItem({ ...item });
-    } catch (e) {
-      console.log({ e });
-    }
-  });
   const handleSaveItem = useCallback(async () => {
+    const id = "save-save";
+
     try {
-      await db.saveItem(item);
+      if (!toaster.isVisible(id)) {
+        toaster.loading({
+          id,
+          title: "Salvando item...",
+          description: "",
+        });
+      }
+
+      await ItemRepository.saveItem(item);
+
+      setItem(itemDefault);
+
+      toaster.update(id, {
+        title: "Item salvo...",
+        description: "",
+        type: "success",
+        duration: 2000,
+      });
     } catch (e) {
-      console.log({ e });
+      toaster.update(id, {
+        title: "Erro ao salvar o item",
+        description: e.message ?? "",
+        type: "error",
+        duration: 2000,
+      });
     }
   });
+
   const handleValue = useCallback((e, name) => {
-    if (
-      [
-        "janeiro",
-        "fevereiro",
-        "marco",
-        "abril",
-        "maio",
-        "junho",
-        "julho",
-        "agosto",
-        "setembro",
-        "outubro",
-        "novembro",
-        "dezembro",
-      ].find((e) => e == name)
-    ) {
-      setItem((prev) => {
-        const newItem = { ...prev };
-        newItem.budget[name] = e.valueAsNumber || 0;
-        return newItem;
-      });
-    } else {
-      setItem((prev) => {
-        const newItem = { ...prev };
+    setItem((prev) => {
+      const newItem = { ...prev };
+      
+      if (name == "status") {
+        newItem[name] = e.checked ? "Ativo" : "Inativo";
+      } else {
         newItem[e.target.name] = e.target.value;
-        return newItem;
-      });
-    }
+      }
+      
+      console.log(newItem)
+      return newItem;
+    });
   }, []);
 
   useEffect(() => {
@@ -88,6 +100,8 @@ export function ItemNovo() {
     }
     getCategoriesAndSub();
   }, []);
+
+  // console.log(item)
 
   return (
     <Container padding={0}>
@@ -106,39 +120,23 @@ export function ItemNovo() {
             Informações
           </Tabs.Trigger>
 
-          {/* <Tabs.Trigger
-            onClick={() => navigate("#budget")}
-            value="budget"
-            color={"white"}
-          >
-            <LuFolder />
-            Orçamento
-          </Tabs.Trigger> */}
-
           <Tabs.Indicator rounded="l2" bg="blue.600" />
 
-          <Separator
-            ml="6"
-            size="lg"
-            orientation="vertical"
-            colorPalette={"red"}
-          ></Separator>
-          <Button
-            ml="6"
-            variant={"surface"}
-            colorPalette={"gray"}
-            onClick={handleSaveItem}
-          >
-            Salvar
-          </Button>
-          <Button
-            ml="6"
-            variant={"surface"}
-            colorPalette={"gray"}
-            onClick={handleImportItem}
-          >
-            Importar
-          </Button>
+          <Flex ml="6" gap="6">
+            <Separator
+              size="lg"
+              orientation="vertical"
+              colorPalette={"red"}
+            ></Separator>
+
+            <Button
+              variant={"surface"}
+              _hover={{ bg: "blue.muted", color: "fg" }}
+              onClick={handleSaveItem}
+            >
+              Salvar
+            </Button>
+          </Flex>
         </Tabs.List>
 
         <Tabs.Content value="informacoes" p="6">
@@ -218,11 +216,17 @@ export function ItemNovo() {
               </Field.Root>
             </Flex>
 
-            <Switch.Root colorPalette="green" size="lg" py="4" defaultChecked>
-              <Switch.HiddenInput />
-              <Switch.Label>Ativo</Switch.Label>
-              <Switch.Control></Switch.Control>
-            </Switch.Root>
+            <Checkbox.Root
+              colorPalette="green"
+              size="lg"
+              py="4"
+              checked={item.status == "Ativo" ? true : false}
+              onCheckedChange={(e) => handleValue(e, "status")}
+            >
+              <Checkbox.HiddenInput />
+              <Checkbox.Control cursor="pointer" />
+              <Checkbox.Label>Ativo</Checkbox.Label>
+            </Checkbox.Root>
           </Stack>
         </Tabs.Content>
 

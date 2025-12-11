@@ -146,39 +146,12 @@ export function ProjectNew() {
     }
   };
 
-  const handleImportProject = async () => {
-    // await ProjectRepository.saveProject({ ...projeto });
-    // setProjeto({
-    //   code: "",
-    //   name: "",
-    //   period: "",
-    //   classificacao: "",
-    //   unit_id: "",
-    //   status: "",
-    //   date_open: new Date().toISOString(),
-    //   budget: {
-    //     janeiro: "",
-    //     fevereiro: "",
-    //     marco: "",
-    //     abril: "",
-    //     maio: "",
-    //     junho: "",
-    //     julho: "",
-    //     agosto: "",
-    //     setembro: "",
-    //     outubro: "",
-    //     novembro: "",
-    //     dezembro: "",
-    //   },
-    // });
-  };
-
   useEffect(() => {
     async function getUnitList() {
       const unitList = await UnitRepository.getUnitList();
       setUnitList(unitList);
     }
-    getUnitList()
+    getUnitList();
   }, []);
 
   return (
@@ -221,14 +194,6 @@ export function ProjectNew() {
             onClick={handleNewProject}
           >
             Salvar
-          </Button>
-          <Button
-            ml="6"
-            variant={"surface"}
-            colorPalette={"gray"}
-            onClick={handleImportProject}
-          >
-            Importar
           </Button>
         </Tabs.List>
 

@@ -31,17 +31,17 @@ export class DataBase extends Dexie {
       centro_custo: "++id, nome",
       fornecedores: "++id, cnpj, nome",
       grupo_pagamento: "++id, codigo, nome",
+      unit: "++id, name, alias, zone, status",
+      pedido_compras: "++id, codigo, requisicao_id, fornecedor_id",
       item: "++id, &code, &name, category_id, sub_category_id, status",
       itens_requisicao:
         "++id, item_id, requisicao_id, pedido_compra_id, grupo_pagamento_id, centro_custo_id, projeto_id, quantidade",
-      pedido_compras: "++id, codigo, requisicao_id, fornecedor_id",
       projects:
         "++id, code, name, period, classification, unit_id, status, date_open, *budgets",
       purchase_requisition:
         "++id, requisition, name, justificative, date_open, *project_ids, status",
       categories: "++id, &name",
       sub_categories: "++id, &name, category_id",
-      unit: "++id, name, alias, zone, status"
     });
   }
 

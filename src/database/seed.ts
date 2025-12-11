@@ -60,35 +60,64 @@ import { db } from "./db";
             name: "CABO FLEXÍVEL ATOX 2,5MM² 750V - PRETO - 100 METROS",
             category_id: 1,
             sub_category_id: 4,
-            status: "ATIVO",
+            status: "Ativo",
           },
           {
             code: "5.2461",
             name: "MÓDULO HDMI 2.0 FÊMEA/FÊMEA",
             category_id: 1,
             sub_category_id: 4,
-            status: "ATIVO",
+            status: "Ativo",
           },
           {
             code: "5.2459",
             name: "MÓDULO TOMADA FLEX 10A E 20A",
             category_id: 1,
             sub_category_id: 4,
-            status: "ATIVO",
+            status: "Ativo",
           },
           {
             code: "5.2474",
             name: "MÓDULO INTERRUPTOR BIPOLAR 10A 250V BRANCO - WEG COMPOSÉ",
             category_id: 1,
             sub_category_id: 4,
-            status: "ATIVO",
+            status: "Ativo",
           },
         ]),
+        // this.dataBase.projects.bulkAdd([
+        //   {
+        //     code: "5.2454",
+        //     name: "CABO FLEXÍVEL ATOX 2,5MM² 750V - PRETO - 100 METROS",
+        //     category_id: 1,
+        //     sub_category_id: 4,
+        //     status: "ATIVO",
+        //   },
+        //   {
+        //     code: "5.2461",
+        //     name: "MÓDULO HDMI 2.0 FÊMEA/FÊMEA",
+        //     category_id: 1,
+        //     sub_category_id: 4,
+        //     status: "ATIVO",
+        //   },
+        //   {
+        //     code: "5.2459",
+        //     name: "MÓDULO TOMADA FLEX 10A E 20A",
+        //     category_id: 1,
+        //     sub_category_id: 4,
+        //     status: "ATIVO",
+        //   },
+        //   {
+        //     code: "5.2474",
+        //     name: "MÓDULO INTERRUPTOR BIPOLAR 10A 250V BRANCO - WEG COMPOSÉ",
+        //     category_id: 1,
+        //     sub_category_id: 4,
+        //     status: "ATIVO",
+        //   },
+        // ]),
       ]);
       return result;
     }
   }
   const result = await Seed.start();
   console.log(result);
-  
 })();
