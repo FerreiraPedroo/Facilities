@@ -3,7 +3,7 @@ import {
   IGetProject,
   IGetProjectList,
   INewProject,
-} from "@/types/interfaces/projeto.interface";
+} from "@/types/interfaces/Project/project.interface";
 
 export class ProjectRepository {
   static dataBase = db;
@@ -40,7 +40,11 @@ export class ProjectRepository {
   }
 
   static async saveProject(project: INewProject) {
-    const result = await this.dataBase.projects.add(project);
-    return result;
+    try {
+      const result = await this.dataBase.projects.add(project);
+      return result;
+    } catch (e) {
+      throw e;
+    }
   }
 }

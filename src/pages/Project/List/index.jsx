@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./styles.css";
@@ -15,43 +15,27 @@ import {
   Group,
   Table,
 } from "@chakra-ui/react";
+import { ImportFile } from "@/utils/importFile";
+import { projectValidator } from "@/types/interfaces/Project/project.interface";
 
 export function ProjectList() {
   const navigate = useNavigate();
 
   const [projetoLista, setProjetoLista] = useState(null);
 
-  const handleImportProject = async () => {
-    // await ProjectRepository.saveProject({ ...projeto });
-    // setProjeto({
-    //   code: "",
-    //   name: "",
-    //   period: "",
-    //   classificacao: "",
-    //   unit_id: "",
-    //   status: "",
-    //   date_open: new Date().toISOString(),
-    //   budget: {
-    //     janeiro: "",
-    //     fevereiro: "",
-    //     marco: "",
-    //     abril: "",
-    //     maio: "",
-    //     junho: "",
-    //     julho: "",
-    //     agosto: "",
-    //     setembro: "",
-    //     outubro: "",
-    //     novembro: "",
-    //     dezembro: "",
-    //   },
-    // });
-  };
+  const handleImportProject = useCallback(async (importedProject) => {
+    try {
+      await projectValidator.parse(importedProject);
+      await ProjectRepository.saveProject(importedProject);
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }, []);
 
   useEffect(() => {
     async function dados() {
       const projetos = await ProjectRepository.getProjects();
-      console.log(projetos);
       setProjetoLista(projetos);
     }
     dados();
@@ -69,13 +53,10 @@ export function ProjectList() {
         >
           Novo projeto
         </Button>
-        <Button
-          variant="surface"
-          _hover={{ bg: "blue.muted", color: "fg" }}
-          onClick={handleImportProject}
-        >
-          Importar projeto
-        </Button>
+        <ImportFile
+          textButton={"Importar projetos"}
+          callBackSaveItens={handleImportProject}
+        />
       </Flex>
 
       <Box paddingY="6" paddingX="4">
@@ -130,21 +111,21 @@ export function ProjectList() {
                   _hover={{ bg: "slate", cursor: "pointer" }}
                   onClick={() => navigate(`/projetos/${projeto.id}`)}
                 >
-                  <Table.Cell textAlign={"center"}>{projeto.id}</Table.Cell>
-                  <Table.Cell textAlign={"center"}>{projeto.code}</Table.Cell>
-                  <Table.Cell>{projeto.name}</Table.Cell>
-                  <Table.Cell textAlign={"center"}>
+                  <Table.Cell fontSize="sm" textAlign={"center"}>
+                    {projeto.id}
+                  </Table.Cell>
+                  <Table.Cell fontSize="sm" textAlign={"left"}>
+                    {projeto.code}
+                  </Table.Cell>
+                  <Table.Cell fontSize="sm">{projeto.name}</Table.Cell>
+                  <Table.Cell fontSize="sm" textAlign={"center"}>
                     {projeto.unit?.name}
                   </Table.Cell>
-                  <Table.Cell textAlign={"center"}>
+                  <Table.Cell fontSize="sm" textAlign={"center"}>
                     {projeto.classification}
                   </Table.Cell>
-                  <Table.Cell textAlign={"center"}>
-                    <Badge
-                      colorPalette={badgeStatus[projeto.status]}
-                      py="2"
-                      px="4"
-                    >
+                  <Table.Cell fontSize="sm" textAlign={"center"}>
+                    <Badge colorPalette={badgeStatus[projeto.status]} px="4">
                       {projeto.status}
                     </Badge>
                   </Table.Cell>

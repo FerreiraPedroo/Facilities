@@ -22,9 +22,10 @@ export function ItensList() {
 
   const handleImportItem = useCallback(async (importItens) => {
     try {
-      await ItemRepository.saveImportItens(importItens);
+      return await ItemRepository.saveImportItens(importItens);
     } catch (e) {
-      console.log({ e });
+      console.log(e);
+      throw e;
     }
   });
 
@@ -32,7 +33,6 @@ export function ItensList() {
     async function getItens() {
       try {
         const itens = await ItemRepository.getItensList();
-
         setItensList(itens);
       } catch (e) {
         console.log(e);
@@ -54,7 +54,10 @@ export function ItensList() {
           Novo item
         </Button>
 
-        <ImportFile textButton={"Importar item"} callBack={handleImportItem} />
+        <ImportFile
+          textButton={"Importar item"}
+          callBackSaveItens={handleImportItem}
+        />
 
         {/* <Button
           variant={"surface"}

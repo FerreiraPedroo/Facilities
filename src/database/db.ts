@@ -1,7 +1,7 @@
 import Dexie, { Table } from "dexie";
 
 import { IItem } from "@/types/interfaces/itens.interface";
-import { IProject } from "@/types/interfaces/projeto.interface";
+import { IProject } from "@/types/interfaces/Project/project.interface";
 import { ICategory } from "@/types/interfaces/category.interface";
 import { IFornecedor } from "@/types/interfaces/fornecedor.interface";
 import { ISubCategory } from "@/types/interfaces/sub_category.interface";

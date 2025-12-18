@@ -3,7 +3,7 @@ import { Root } from "@pages/Root";
 import { Home } from "@pages/Home";
 import { RequisicaoLista } from "@pages/Requisicao/Lista";
 import { RequisicaoInfo } from "@pages/Requisicao/Info";
-import { ItensList } from "@pages/Itens/Lista";
+import { ItensList } from "@pages/Itens/List";
 import { ItemNovo } from "@pages/Itens/Novo";
 import { ProjectNew } from "./pages/Project/New";
 import { ProjectList } from "./pages/Project/List";

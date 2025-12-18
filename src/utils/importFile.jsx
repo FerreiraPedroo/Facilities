@@ -6,16 +6,22 @@ import {
   CloseButton,
   Dialog,
   FileUpload,
+  Flex,
   Icon,
   Portal,
+  Text,
   useFileUpload,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { LuUpload } from "react-icons/lu";
 import Papa from "papaparse";
 
-export function ImportFile({ textButton, callBack }) {
+export function ImportFile({ textButton, callBackSaveItens }) {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const parserCounter = useRef({ parsed: 0, errors: 0 });
+  const [parsedList, setParsedList] = useState([]);
 
   const fileUpload = useFileUpload({
     maxFiles: 1,
@@ -23,28 +29,35 @@ export function ImportFile({ textButton, callBack }) {
   });
 
   useEffect(() => {
-    console.log(fileUpload);
-    async function parseFile() {
-      if (fileUpload.acceptedFiles.length) {
-        console.log();
-        const parsed = await Papa.parse(fileUpload.acceptedFiles[0], {
-          header: true,
-          skipEmptyLines: true,
-          // dynamicTyping: true, // Converte tipos de dados automaticamente (números, booleanos)
-          complete: function (results) {
-            console.log("Dados do arquivo:", results.data);
-            console.log("Erros:", results.errors);
-            console.log("Metadados:", results.meta);
-          },
-        });
-        console.log(parsed);
-      }
+    if (fileUpload.acceptedFiles[0]) {
+      const papaParsed = Papa.parse(fileUpload.acceptedFiles[0], {
+        header: true,
+        skipEmptyLines: true,
+        step: async function (results, parser) {
+          try {
+            await callBackSaveItens(results.data);
+            parserCounter.parsed++;
+          } catch (e) {
+            parserCounter.errors++;
+          }
+        },
+        complete: function (results) {
+          setParsedList(results.data);
+          fileUpload.clearFiles();
+        },
+      });
     }
-    parseFile();
   }, [fileUpload]);
 
   return (
-    <Dialog.Root lazyMount open={open} onOpenChange={(e) => setOpen(e.open)}>
+    <Dialog.Root
+      lazyMount
+      open={open}
+      onOpenChange={(e) => {
+        setParsedList([]);
+        setOpen(e.open);
+      }}
+    >
       <Dialog.Trigger asChild>
         <Button variant={"surface"} _hover={{ bg: "blue.muted", color: "fg" }}>
           {textButton}
@@ -58,8 +71,14 @@ export function ImportFile({ textButton, callBack }) {
               <Dialog.Title>{textButton}</Dialog.Title>
             </Dialog.Header>
             <Dialog.Body>
-              {fileUpload.acceptedFiles.length ? (
-                <></>
+              {parsedList.length ? (
+                <Flex>
+                  <Box>
+                    <Text>Total de registros: {parserCounter.parsed}</Text>
+                    <br />
+                    <Text>Total de erros: {parserCounter.errors}</Text>
+                  </Box>
+                </Flex>
               ) : (
                 <FileUpload.RootProvider
                   maxW="md"
@@ -89,7 +108,9 @@ export function ImportFile({ textButton, callBack }) {
               <Dialog.ActionTrigger asChild>
                 <Button variant="outline">Cancelar</Button>
               </Dialog.ActionTrigger>
-              <Button onClick={callBack}>Salvar</Button>
+              <Button onClick={() => callBackSaveItens(parsedList)}>
+                Salvar
+              </Button>
             </Dialog.Footer>
             <Dialog.CloseTrigger asChild>
               <CloseButton size="sm" />

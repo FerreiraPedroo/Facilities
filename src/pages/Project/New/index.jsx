@@ -12,9 +12,11 @@ import {
   Flex,
   For,
   FormatNumber,
+  HStack,
   Input,
   NativeSelect,
   NumberInput,
+  RadioCard,
   Select,
   Separator,
   Stack,
@@ -24,6 +26,8 @@ import {
   Text,
 } from "@chakra-ui/react";
 
+import { useForm } from "react-hook-form";
+
 import { LuFolder, LuUser } from "react-icons/lu";
 import { ProjectRepository } from "@/repositories/project.repository";
 
@@ -31,6 +35,7 @@ import unidades from "../../../database/unidades.json";
 
 import "./styles.css";
 import { UnitRepository } from "@/repositories/unit.repository";
+import { projectValidator } from "@/types/interfaces/Project/project.interface";
 
 const tabPosition = {
   informacoes: 0,
@@ -41,6 +46,7 @@ export function ProjectNew() {
   const navigate = useNavigate();
   const [formError, setFormError] = useState([]);
   const [unitList, setUnitList] = useState([]);
+  const [projetoErrors, setProjetoErrors] = useState({});
   const [projeto, setProjeto] = useState({
     code: "",
     name: "",
@@ -65,87 +71,51 @@ export function ProjectNew() {
     },
   });
 
-  const handleValue = useCallback((e, name) => {
-    console.log(e, name);
-    if (
-      [
-        "janeiro",
-        "fevereiro",
-        "marco",
-        "abril",
-        "maio",
-        "junho",
-        "julho",
-        "agosto",
-        "setembro",
-        "outubro",
-        "novembro",
-        "dezembro",
-      ].find((e) => e == name)
-    ) {
-      setProjeto((prev) => {
-        const novo = { ...prev };
-        novo.budget[name] = e.valueAsNumber || 0;
-        return novo;
-      });
-    } else {
-      setProjeto((prev) => {
-        const novo = { ...prev };
-        novo[e.target.name] = e.target.value;
-        return novo;
-      });
-    }
-  }, []);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
-  const handleModal = () => {
-    const item = Object.entries({ ...projeto }).reduce((acc, [key, value]) => {
-      if (value instanceof Object) {
-        if (!Object.entries({ ...value }).find(([, v]) => v)) {
-          acc.push(
-            key.charAt(0).toUpperCase() +
-              key.slice(1) +
-              " - é necessário pelo menos um mês de orçamento."
-          );
-        }
-      } else if (!value) {
-        acc.push(key.charAt(0).toUpperCase() + key.slice(1));
-      }
-      return acc;
-    }, []);
-    setFormError(item);
-  };
+  console.log(watch());
+  console.log(watch("status"));
+
+  const onSubmit = (data) => console.log(data);
 
   const handleNewProject = async () => {
     try {
-      await ProjectRepository.saveProject({ ...projeto });
-      setProjeto({
-        code: "",
-        name: "",
-        period: "",
-        classificacao: "",
-        unit_id: "",
-        status: "",
-        date_open: new Date().toISOString(),
-        budget: {
-          janeiro: "",
-          fevereiro: "",
-          marco: "",
-          abril: "",
-          maio: "",
-          junho: "",
-          julho: "",
-          agosto: "",
-          setembro: "",
-          outubro: "",
-          novembro: "",
-          dezembro: "",
-        },
-      });
+      console.log(projeto);
+      const projectValidated = await projectValidator.parse(projeto);
+      console.log(projectValidated);
+      // await ProjectRepository.saveProject({ ...projeto });
+      // setProjeto({
+      //   code: "",
+      //   name: "",
+      //   period: "",
+      //   classificacao: "",
+      //   unit_id: "",
+      //   status: "",
+      //   date_open: new Date().toISOString(),
+      //   budget: {
+      //     janeiro: "",
+      //     fevereiro: "",
+      //     marco: "",
+      //     abril: "",
+      //     maio: "",
+      //     junho: "",
+      //     julho: "",
+      //     agosto: "",
+      //     setembro: "",
+      //     outubro: "",
+      //     novembro: "",
+      //     dezembro: "",
+      //   },
+      // });
     } catch (e) {
-      console.log(e);
+      console.log(JSON.parse(e));
     }
   };
-
   useEffect(() => {
     async function getUnitList() {
       const unitList = await UnitRepository.getUnitList();
@@ -198,78 +168,112 @@ export function ProjectNew() {
         </Tabs.List>
 
         <Tabs.Content value="informacoes" p="6">
-          <Stack gap="3" maxW="lg" css={{ "--field-label-width": "128px" }}>
-            <Field.Root orientation="vertical" required>
-              <Field.Label>Código</Field.Label>
-              <Input
-                name="code"
-                defaultValue={projeto.code}
-                onChange={(e) => handleValue(e)}
-              />
-            </Field.Root>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Stack gap="3" maxW="lg">
+              <Field.Root orientation="horizontal" required>
+                <Field.Label>Código</Field.Label>
+                <Input name="code" {...register("code")} />
+              </Field.Root>
 
-            <Field.Root orientation="vertical" required>
-              <Field.Label>Nome</Field.Label>
-              <Input
-                name="name"
-                defaultValue={projeto.name}
-                onChange={(e) => handleValue(e)}
-              />
-              <Field.ErrorText>This is an error text</Field.ErrorText>
-            </Field.Root>
+              <Field.Root orientation="horizontal" required>
+                <Field.Label>Nome</Field.Label>
+                <Input name="name" {...register("name")} />
+                <Field.ErrorText>This is an error text</Field.ErrorText>
+              </Field.Root>
 
-            <Field.Root orientation="vertical" required>
-              <Field.Label>Unidade</Field.Label>
-              <NativeSelect.Root width="100%">
-                <NativeSelect.Field
-                  placeholder="Selecione uma opção"
-                  name="unit"
-                  defaultValue={projeto.unit}
-                  onChange={(e) => handleValue(e)}
-                >
-                  <For each={unitList}>
-                    {(unit) => {
-                      return (
-                        <option key={unit.id} value={unit.id}>
-                          {unit.alias}
-                        </option>
-                      );
-                    }}
-                  </For>
-                </NativeSelect.Field>
-                <NativeSelect.Indicator />
-              </NativeSelect.Root>
-            </Field.Root>
+              <Field.Root orientation="horizontal" required>
+                <Field.Label>Unidade</Field.Label>
+                <NativeSelect.Root width="100%">
+                  <NativeSelect.Field
+                    placeholder="Selecione uma opção"
+                    name="unit"
+                    {...register("unit")}
+                  >
+                    <For each={unitList}>
+                      {(unit) => {
+                        return (
+                          <option key={unit.id} value={unit.id}>
+                            {unit.alias}
+                          </option>
+                        );
+                      }}
+                    </For>
+                  </NativeSelect.Field>
+                  <NativeSelect.Indicator />
+                </NativeSelect.Root>
+              </Field.Root>
 
-            <Field.Root orientation="vertical" required>
-              <Field.Label>Classificação</Field.Label>
-              <NativeSelect.Root width="100%">
-                <NativeSelect.Field
-                  placeholder="Selecione uma opção"
-                  name="classification"
-                  defaultValue={projeto.classification}
-                  onChange={(e) => handleValue(e)}
-                >
-                  <For each={["CAPEX", "OPEX"]}>
-                    {(classif) => {
-                      return (
-                        <option key={classif} value={classif}>
-                          {classif}
-                        </option>
-                      );
-                    }}
-                  </For>
-                </NativeSelect.Field>
-                <NativeSelect.Indicator />
-              </NativeSelect.Root>
-            </Field.Root>
+              <RadioCard.Root
+                orientation="horizontal"
+                align="center"
+                maxW="400px"
+                name="classification"
+                colorPalette={"green"}
+                display={"flex"}
+                flexDirection={"row"}
+                alignItems={"center"}
+                gap="4"
+                defaultValue={"CAPEX"}
+              >
+                <RadioCard.Label>Classificação</RadioCard.Label>
+                <HStack width={"200px"}>
+                  <RadioCard.Item value="CAPEX">
+                    <RadioCard.ItemHiddenInput
+                      {...register("classification", {
+                        required: true,
+                      })}
+                    />
+                    <RadioCard.ItemControl>
+                      <RadioCard.ItemText>CAPEX</RadioCard.ItemText>
+                    </RadioCard.ItemControl>
+                  </RadioCard.Item>
 
-            <Switch.Root colorPalette="green" size="lg" py="4" defaultChecked>
-              <Switch.HiddenInput />
-              <Switch.Label>Ativo</Switch.Label>
-              <Switch.Control></Switch.Control>
-            </Switch.Root>
-          </Stack>
+                  <RadioCard.Item value="OPEX">
+                    <RadioCard.ItemHiddenInput
+                      {...register("classification")}
+                    />
+                    <RadioCard.ItemControl>
+                      <RadioCard.ItemText>OPEX</RadioCard.ItemText>
+                    </RadioCard.ItemControl>
+                  </RadioCard.Item>
+                </HStack>
+              </RadioCard.Root>
+
+              <RadioCard.Root
+                orientation="horizontal"
+                align="center"
+                maxW="400px"
+                name="status"
+                colorPalette={"green"}
+                display={"flex"}
+                flexDirection={"row"}
+                alignItems={"center"}
+                gap="4"
+                defaultValue={"Ativo"}
+              >
+                <RadioCard.Label>Classificação</RadioCard.Label>
+                <HStack width={"200px"}>
+                  <RadioCard.Item value="Ativo">
+                    <RadioCard.ItemHiddenInput
+                      {...register("status", {
+                        required: true,
+                      })}
+                    />
+                    <RadioCard.ItemControl>
+                      <RadioCard.ItemText>Ativo</RadioCard.ItemText>
+                    </RadioCard.ItemControl>
+                  </RadioCard.Item>
+
+                  <RadioCard.Item value="Inativo">
+                    <RadioCard.ItemHiddenInput {...register("status")} />
+                    <RadioCard.ItemControl>
+                      <RadioCard.ItemText>Inativo</RadioCard.ItemText>
+                    </RadioCard.ItemControl>
+                  </RadioCard.Item>
+                </HStack>
+              </RadioCard.Root>
+            </Stack>
+          </form>
         </Tabs.Content>
 
         <Tabs.Content value="orcamento" p="6">
@@ -281,12 +285,7 @@ export function ProjectNew() {
               <DataList.ItemValue color="black" fontSize="lg">
                 {projeto?.budget && (
                   <FormatNumber
-                    value={Object.entries(projeto.budget).reduce(
-                      (acc, [key, cur]) => {
-                        return acc + Number(cur);
-                      },
-                      0
-                    )}
+                    value={0}
                     style="currency"
                     currency="BRL"
                     fontSize="lg"
@@ -307,17 +306,10 @@ export function ProjectNew() {
               <Table.Row key={"janeiro"}>
                 <Table.Cell px="4">JANEIRO</Table.Cell>
                 <Table.Cell p="0">
-                  <NumberInput.Root
-                    value={projeto.budget ? String(projeto.budget.janeiro) : ""}
-                    onValueChange={(e) => handleValue(e, "janeiro")}
-                    formatOptions={{
-                      style: "currency",
-                      currency: "BRL",
-                    }}
-                  >
+                  <NumberInput.Root {...register("budget.janeiro")}>
                     <NumberInput.Input
-                      name={"janeiro"}
-                      placeholder="R$"
+                      name={"budget.janeiro"}
+                      placeholder="0"
                       border="0"
                       borderRadius="0"
                       py="0"
@@ -328,19 +320,10 @@ export function ProjectNew() {
               <Table.Row key={"fevereiro"}>
                 <Table.Cell px="4">FEVEREIRO</Table.Cell>
                 <Table.Cell p="0">
-                  <NumberInput.Root
-                    value={
-                      projeto.budget ? String(projeto.budget.fevereiro) : ""
-                    }
-                    onValueChange={(e) => handleValue(e, "fevereiro")}
-                    formatOptions={{
-                      style: "currency",
-                      currency: "BRL",
-                    }}
-                  >
+                  <NumberInput.Root {...register("budget.fevereiro")}>
                     <NumberInput.Input
-                      name={"fevereiro"}
-                      placeholder="R$"
+                      name={"budget.fevereiro"}
+                      placeholder="0"
                       border="0"
                       borderRadius="0"
                       py="0"
@@ -351,17 +334,10 @@ export function ProjectNew() {
               <Table.Row key={"marco"}>
                 <Table.Cell px="4">MARÇO</Table.Cell>
                 <Table.Cell p="0">
-                  <NumberInput.Root
-                    value={projeto.budget ? String(projeto.budget.marco) : ""}
-                    onValueChange={(e) => handleValue(e, "marco")}
-                    formatOptions={{
-                      style: "currency",
-                      currency: "BRL",
-                    }}
-                  >
+                  <NumberInput.Root {...register("budget.marco")}>
                     <NumberInput.Input
-                      name={"marco"}
-                      placeholder="R$"
+                      name={"budget.marco"}
+                      placeholder="0"
                       border="0"
                       borderRadius="0"
                       py="0"
@@ -372,17 +348,10 @@ export function ProjectNew() {
               <Table.Row key={"abril"}>
                 <Table.Cell px="4">ABRIL</Table.Cell>
                 <Table.Cell p="0">
-                  <NumberInput.Root
-                    value={projeto.budget ? String(projeto.budget.abril) : ""}
-                    onValueChange={(e) => handleValue(e, "abril")}
-                    formatOptions={{
-                      style: "currency",
-                      currency: "BRL",
-                    }}
-                  >
+                  <NumberInput.Root {...register("budget.abril")}>
                     <NumberInput.Input
-                      name={"abril"}
-                      placeholder="R$"
+                      name={"budget.abril"}
+                      placeholder="0"
                       border="0"
                       borderRadius="0"
                       py="0"
@@ -393,17 +362,10 @@ export function ProjectNew() {
               <Table.Row key={"maio"}>
                 <Table.Cell px="4">MAIO</Table.Cell>
                 <Table.Cell p="0">
-                  <NumberInput.Root
-                    value={projeto.budget ? String(projeto.budget.maio) : ""}
-                    onValueChange={(e) => handleValue(e, "maio")}
-                    formatOptions={{
-                      style: "currency",
-                      currency: "BRL",
-                    }}
-                  >
+                  <NumberInput.Root {...register("budget.maio")}>
                     <NumberInput.Input
-                      name={"maio"}
-                      placeholder="R$"
+                      name={"budget.maio"}
+                      placeholder="0"
                       border="0"
                       borderRadius="0"
                       py="0"
@@ -414,17 +376,10 @@ export function ProjectNew() {
               <Table.Row key={"junho"}>
                 <Table.Cell px="4">JUNHO</Table.Cell>
                 <Table.Cell p="0">
-                  <NumberInput.Root
-                    value={projeto.budget ? String(projeto.budget.junho) : ""}
-                    onValueChange={(e) => handleValue(e, "junho")}
-                    formatOptions={{
-                      style: "currency",
-                      currency: "BRL",
-                    }}
-                  >
+                  <NumberInput.Root {...register("budget.junho")}>
                     <NumberInput.Input
-                      name={"junho"}
-                      placeholder="R$"
+                      name={"budget.junho"}
+                      placeholder="0"
                       border="0"
                       borderRadius="0"
                       py="0"
@@ -435,17 +390,10 @@ export function ProjectNew() {
               <Table.Row key={"julho"}>
                 <Table.Cell px="4">JULHO</Table.Cell>
                 <Table.Cell p="0">
-                  <NumberInput.Root
-                    value={projeto.budget ? String(projeto.budget.julho) : ""}
-                    onValueChange={(e) => handleValue(e, "julho")}
-                    formatOptions={{
-                      style: "currency",
-                      currency: "BRL",
-                    }}
-                  >
+                  <NumberInput.Root {...register("budget.julho")}>
                     <NumberInput.Input
-                      name={"julho"}
-                      placeholder="R$"
+                      name={"budget.julho"}
+                      placeholder="0"
                       border="0"
                       borderRadius="0"
                       py="0"
@@ -456,17 +404,10 @@ export function ProjectNew() {
               <Table.Row key={"agosto"}>
                 <Table.Cell px="4">AGOSTO</Table.Cell>
                 <Table.Cell p="0">
-                  <NumberInput.Root
-                    value={projeto.budget ? String(projeto.budget.agosto) : ""}
-                    onValueChange={(e) => handleValue(e, "agosto")}
-                    formatOptions={{
-                      style: "currency",
-                      currency: "BRL",
-                    }}
-                  >
+                  <NumberInput.Root {...register("budget.agosto")}>
                     <NumberInput.Input
-                      name={"agosto"}
-                      placeholder="R$"
+                      name={"budget.agosto"}
+                      placeholder="0"
                       border="0"
                       borderRadius="0"
                       py="0"
@@ -477,19 +418,10 @@ export function ProjectNew() {
               <Table.Row key={"setembro"}>
                 <Table.Cell px="4">SETEMBRO</Table.Cell>
                 <Table.Cell p="0">
-                  <NumberInput.Root
-                    value={
-                      projeto.budget ? String(projeto.budget.setembro) : ""
-                    }
-                    onValueChange={(e) => handleValue(e, "setembro")}
-                    formatOptions={{
-                      style: "currency",
-                      currency: "BRL",
-                    }}
-                  >
+                  <NumberInput.Root {...register("budget.setembro")}>
                     <NumberInput.Input
-                      name={"setembro"}
-                      placeholder="R$"
+                      name={"budget.setembro"}
+                      placeholder="0"
                       border="0"
                       borderRadius="0"
                       py="0"
@@ -500,17 +432,10 @@ export function ProjectNew() {
               <Table.Row key={"outubro"}>
                 <Table.Cell px="4">OUTUBRO</Table.Cell>
                 <Table.Cell p="0">
-                  <NumberInput.Root
-                    value={projeto.budget ? String(projeto.budget.outubro) : ""}
-                    onValueChange={(e) => handleValue(e, "outubro")}
-                    formatOptions={{
-                      style: "currency",
-                      currency: "BRL",
-                    }}
-                  >
+                  <NumberInput.Root {...register("budget.outubro")}>
                     <NumberInput.Input
-                      name={"outubro"}
-                      placeholder="R$"
+                      name={"budget.outubro"}
+                      placeholder="0"
                       border="0"
                       borderRadius="0"
                       py="0"
@@ -521,19 +446,10 @@ export function ProjectNew() {
               <Table.Row key={"novembro"}>
                 <Table.Cell px="4">NOVEMBRO</Table.Cell>
                 <Table.Cell p="0">
-                  <NumberInput.Root
-                    value={
-                      projeto.budget ? String(projeto.budget.novembro) : ""
-                    }
-                    onValueChange={(e) => handleValue(e, "novembro")}
-                    formatOptions={{
-                      style: "currency",
-                      currency: "BRL",
-                    }}
-                  >
+                  <NumberInput.Root {...register("budget.novembro")}>
                     <NumberInput.Input
-                      name={"novembro"}
-                      placeholder="R$"
+                      name={"budget.novembro"}
+                      placeholder="0"
                       border="0"
                       borderRadius="0"
                       py="0"
@@ -544,18 +460,9 @@ export function ProjectNew() {
               <Table.Row key={"dezembro"}>
                 <Table.Cell px="4">DEZEMBRO</Table.Cell>
                 <Table.Cell p="0">
-                  <NumberInput.Root
-                    value={
-                      projeto.budget ? String(projeto.budget.dezembro) : ""
-                    }
-                    onValueChange={(e) => handleValue(e, "dezembro")}
-                    formatOptions={{
-                      style: "currency",
-                      currency: "BRL",
-                    }}
-                  >
+                  <NumberInput.Root {...register("budget.dezembro")}>
                     <NumberInput.Input
-                      name={"dezembro"}
+                      name={"budget.dezembro"}
                       placeholder="R$"
                       border="0"
                       borderRadius="0"
